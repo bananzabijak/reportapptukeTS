@@ -8,7 +8,7 @@ import {
   Image,
   Text,
 } from 'react-native';
-import {TextInput, List, Button} from 'react-native-paper';
+import {TextInput, List, Button, Title} from 'react-native-paper';
 import {editovatStyle} from './editovat.style';
 import {HeaderComponent} from '../../components/header/header.component';
 import firestore from '@react-native-firebase/firestore';
