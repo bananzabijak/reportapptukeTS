@@ -93,6 +93,7 @@ export const NovaZavada = ({navigation, route}: any) => {
         user: UserUID,
         image: image,
         stav: "Nové",
+        datum: Date(),
       })
       .then(async () => {
         console.log('Zavada přidána');
@@ -179,10 +180,10 @@ export const NovaZavada = ({navigation, route}: any) => {
           </View>
 
           <View>
-            <Button icon="camera" mode="contained" onPress={selectImage}>
+            <Button style={novaStyle.tlacitko} icon="camera" mode="contained" onPress={selectImage}>
               Vybrat obrázek
             </Button>
-            <Button icon="arrow-right" mode="contained" onPress={uploadZavadu}>
+            <Button style={novaStyle.tlacitko} icon="arrow-right" mode="contained" onPress={uploadZavadu}>
               Nahlásit závadu
             </Button>
           </View>

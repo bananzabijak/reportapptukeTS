@@ -48,6 +48,12 @@ export const editovatStyle = StyleSheet.create(
 
         },
 
+        tlacitko: {
+          marginBottom:5,
+          marginLeft: 5,
+          marginRight:5
+        },
+
         listItem:{
             
 

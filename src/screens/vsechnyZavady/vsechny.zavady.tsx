@@ -26,6 +26,7 @@ interface IZavada {
     uri?: string;
   };
   stav: string;
+  datum?: string;
 }
 
 export const VsechnyZavady = ({navigation, route}: any) => {

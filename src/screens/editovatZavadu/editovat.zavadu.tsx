@@ -114,13 +114,14 @@ export const EditovatZavadu = ({navigation, route}) => {
   };
 
   useEffect(() => {
-    getZavada();
+    getZavada();    
     return () => {
       setMistnost('');
       setTypZavady('');
       setObsah('');
       setNazev('');  
       setImage(null); 
+      
     };
     //console.log(zavada);
   }, []);
@@ -154,7 +155,8 @@ export const EditovatZavadu = ({navigation, route}) => {
         mistnost: mistnost,
         user: UserUID,
         image: image,
-        stav: "Upraveno"
+        stav: "Upraveno",
+        datum: Date(),
       })
       .then(async () => {
         console.log('Zavada přidána');
@@ -235,10 +237,10 @@ export const EditovatZavadu = ({navigation, route}) => {
               </View>
             ) : null}
           </View>
-          <Button icon="camera" mode="contained" onPress={selectImage}>
+          <Button icon="camera" style={editovatStyle.tlacitko} mode="contained" onPress={selectImage}>
             Vybrat obrázek
           </Button>
-          <Button icon="arrow-right" mode="contained" onPress={editZavadu}>
+          <Button icon="arrow-right" style={editovatStyle.tlacitko} mode="contained" onPress={editZavadu}>
             Editovat závadu
           </Button>
         </View>
