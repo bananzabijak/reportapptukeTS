@@ -168,27 +168,28 @@ export const EditovatZavadu = ({navigation, route}) => {
 
   return (
     <SafeAreaView>
-      <ScrollView>
-        <HeaderComponent title="Detail závady" />
-        <View style={editovatStyle.content}>        
-           
-            <View>
-              <Text>{nazev}</Text>
-            </View>
-            <View>
-              <Text>Typ závady:</Text>
-            </View>
-            <View>
-              <Text>{typZavady}</Text>
-            </View>         
-            <View>
-            <View>
-            <Text>Mistnost:</Text>
-          </View>
-            <Text>{mistnost}</Text>
-            </View>           
+      <ScrollView style={editovatStyle.container}>
+      <View style={editovatStyle.zahlavi}> 
+          <Title style={editovatStyle.nadpis}>Detail závady</Title>
+          </View> 
+        <View style={editovatStyle.content}>
           <View>
-            <Text>Popis závady:</Text>
+            <Text style={editovatStyle.nazev}>{nazev}</Text>
+          </View>
+          <View>
+            <Text style={editovatStyle.sekce}>Typ závady:</Text>
+          </View>
+          <View>
+            <Text>{typZavady}</Text>
+          </View>
+          <View>
+            <View>
+              <Text style={editovatStyle.sekce}>Mistnost:</Text>
+            </View>
+            <Text>{mistnost}</Text>
+          </View>
+          <View>
+            <Text style={editovatStyle.sekce}>Popis závady:</Text>
           </View>
           <View>
             <Text>{obsah}</Text>
@@ -203,8 +204,8 @@ export const EditovatZavadu = ({navigation, route}) => {
                 <Progress.Bar progress={transferred} width={300} />
               </View>
             ) : null}
-          </View>          
-          <Button icon="arrow-right" mode="contained" onPress={editZavadu}>
+          </View>
+          <Button style={editovatStyle.buttonOdeslat} icon="arrow-right" mode="contained" onPress={editZavadu}>
             Označit za opravené
           </Button>
         </View>

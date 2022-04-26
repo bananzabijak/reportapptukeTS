@@ -9,7 +9,8 @@ import firestore from '@react-native-firebase/firestore';
 import { EditovatZavadu } from './src/screens/editovatZavadu/editovat.zavadu';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { VsechnyZavady } from './src/screens/vsechnyZavady/vsechny.zavady';
+import { NahlaseneZavady } from './src/screens/vsechnyZavady/nahlasene.zavady';
+import { VyreseneZavady } from './src/screens/vyreseneZavady/vyresene.zavady';
 
 const Stack = createStackNavigator();
 
@@ -22,10 +23,11 @@ const App = () => {
       <PaperProvider theme={theme}>
       <Stack.Navigator>
         <Stack.Screen name="Login" component= {LoginScreen} options={{header: () => null}}/>
-        <Stack.Screen name="Vsechny zavady" component= {VsechnyZavady} options={{header: () => null}}/> 
+        <Stack.Screen name="Vsechny zavady" component= {NahlaseneZavady} options={{header: () => null}}/> 
         <Stack.Screen name="Editovat zavadu" component= {EditovatZavadu} options={{header: () => null}}/>        
         <Stack.Screen name="Nova zavada" component= {NovaZavada} options={{header: () => null}}/>
-        <Stack.Screen name="Camera" component= {CameraScreen} options={{header: () => null}}/>         
+        <Stack.Screen name="Camera" component= {CameraScreen} options={{header: () => null}}/>
+        <Stack.Screen name="Vyřešené závady" component= {VyreseneZavady} options={{header: () => null}}/>          
       </Stack.Navigator>     
       </PaperProvider >
     </NavigationContainer>

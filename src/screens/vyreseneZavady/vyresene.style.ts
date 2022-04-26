@@ -2,13 +2,14 @@ import {StyleSheet} from 'react-native';
 import {black} from 'react-native-paper/lib/typescript/styles/colors';
 import {theme} from '../../../App.style';
 
-export const vsechnyStyle = StyleSheet.create({
+export const vyreneseStyle = StyleSheet.create({
   container: {
     backgroundColor: "#dfe7fd",
     paddingTop: 20,
     paddingBottom: 20,
     paddingHorizontal: 20,
-    marginTop: 20,
+    marginTop: 5,
+    marginBottom: 5,
     marginLeft: 5,
     marginRight: 5,    
     borderRadius: 10,
@@ -29,6 +30,32 @@ export const vsechnyStyle = StyleSheet.create({
     color: '#000000',
     fontWeight: 'bold',
     textAlign: 'left',
+  },
+
+  filter: {
+    position: 'relative',    
+    marginTop: 10,
+    marginLeft: 0,
+    marginBottom:10,    
+    paddingLeft:2,
+    paddingRight:2,
+    color:"#cddafd"
+    
+  },
+  
+  stav: {
+    color: 'green',
+    fontWeight: 'bold',
+    textAlign: 'left',
+  },
+  zahlavi: {
+    backgroundColor:'#BB86FC',
+    position:"relative",
+    paddingBottom:10,
+    paddingTop:10,
+    borderTopEndRadius: 100,
+    borderBottomStartRadius: 100,
+    
   },
   nadpis: {
     color: '#000000',

@@ -9,7 +9,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
-import {vsechnyStyle} from './vsechny.style';
+import {nahlaseneStyle} from './nahlasene.style';
 import {Button, Title, FAB} from 'react-native-paper';
 import {ScrollView} from 'react-native-gesture-handler';
 import storage from '@react-native-firebase/storage';
@@ -28,7 +28,7 @@ interface IZavada {
   stav: string;
 }
 
-export const VsechnyZavady = ({navigation, route}: any) => {
+export const NahlaseneZavady = ({navigation, route}: any) => {
   const {UserUID, UserEmail} = route.params;
   const [arrayZavad, setArray] = useState<IZavada[]>([]);
 
@@ -59,7 +59,7 @@ export const VsechnyZavady = ({navigation, route}: any) => {
   }, [UserUID]);
 
   const navNovaZavada = () => {
-    navigation.navigate('Nova zavada', {
+    navigation.navigate('Vyřešené závady', {
       UserUID: UserUID,
       UserEmail: UserEmail,
     });
@@ -95,30 +95,30 @@ export const VsechnyZavady = ({navigation, route}: any) => {
   });
 
   return (
-    <View style={vsechnyStyle.content}> 
+    <View style={nahlaseneStyle.content}> 
   
       
       
         <SafeAreaView>  
-          <Title style={vsechnyStyle.nadpis}>Všechny závady</Title>
+          <Title style={nahlaseneStyle.nadpis}>Všechny závady</Title>
          <ScrollView>  
 
           <FlatList
             data={arrayZavad}
             keyExtractor={item => item.id!}
             renderItem={({item}) => (
-              <View style={vsechnyStyle.container}>
-                <Text style={vsechnyStyle.nazev}>{item.nazev}</Text>
-                <Text style={vsechnyStyle.stav}>{item.stav}</Text>
-                <View style={vsechnyStyle.popisek}>
+              <View style={nahlaseneStyle.container}>
+                <Text style={nahlaseneStyle.nazev}>{item.nazev}</Text>
+                <Text style={nahlaseneStyle.stav}>{item.stav}</Text>
+                <View style={nahlaseneStyle.popisek}>
                 <Text numberOfLines={1} ellipsizeMode="tail" style={{flex: 1}}>
                   {item.popis.slice(0, 30) + "..."}
                 </Text>
                 </View>
-                <View style={vsechnyStyle.ikonka}>
+                <View style={nahlaseneStyle.ikonka}>
                   {item.imageUrl && (
                     <Image
-                      style={vsechnyStyle.fotka}
+                      style={nahlaseneStyle.fotka}
                       source={{
                         uri: item.imageUrl,
                       }}
@@ -128,7 +128,7 @@ export const VsechnyZavady = ({navigation, route}: any) => {
                 <Button
                   icon="pencil"
                   mode="contained"
-                  style={vsechnyStyle.tlacitko}
+                  style={nahlaseneStyle.tlacitko}
                   onPress={() => editovatZavadu(item.id!)}>
                   Zobrazit
                 </Button>
@@ -138,13 +138,15 @@ export const VsechnyZavady = ({navigation, route}: any) => {
           </ScrollView>
         </SafeAreaView>
      
-      <View style={vsechnyStyle.corner}>
-        <FAB
-          style={vsechnyStyle.fabka} //proč nefunguje style? nebo spíš proč abosulte position set na right 0 bottom 0 furt bere position textu ne celého view
-          icon="plus"
-          onPress={navNovaZavada}
-        />
-      </View>
+        <View style={nahlaseneStyle.corner}>        
+        <Button
+                  icon="folder-check-outline"
+                  mode="contained"
+                  style={nahlaseneStyle.filter}
+                  onPress={navNovaZavada}>
+                  Vyřešené
+                </Button>
+      </View> 
     </View>
   );
 };
