@@ -4,7 +4,6 @@ import { Provider as PaperProvider, TextInput } from 'react-native-paper';
 import { LoginScreen } from './src/screens/login/login.screen';
 import { theme } from './App.style';
 import { NovaZavada } from './src/screens/novaZavada/nova.zavada';
-import { CameraScreen } from './src/screens/camera/camera.screen';
 import firestore from '@react-native-firebase/firestore';
 import { EditovatZavadu } from './src/screens/editovatZavadu/editovat.zavadu';
 import { NavigationContainer } from '@react-navigation/native';
@@ -25,8 +24,7 @@ const App = () => {
         <Stack.Screen name="Login" component= {LoginScreen} options={{header: () => null}}/>
         <Stack.Screen name="Vsechny zavady" component= {NahlaseneZavady} options={{header: () => null}}/> 
         <Stack.Screen name="Editovat zavadu" component= {EditovatZavadu} options={{header: () => null}}/>        
-        <Stack.Screen name="Nova zavada" component= {NovaZavada} options={{header: () => null}}/>
-        <Stack.Screen name="Camera" component= {CameraScreen} options={{header: () => null}}/>
+        <Stack.Screen name="Nova zavada" component= {NovaZavada} options={{header: () => null}}/>        
         <Stack.Screen name="Vyřešené závady" component= {VyreseneZavady} options={{header: () => null}}/>          
       </Stack.Navigator>     
       </PaperProvider >
