@@ -102,7 +102,10 @@ export const VsechnyZavady = ({navigation, route}: any) => {
       
       
         <SafeAreaView>  
+        <View style={vsechnyStyle.zahlavi}> 
           <Title style={vsechnyStyle.nadpis}>Všechny závady</Title>
+          </View>
+
          <ScrollView>  
 
           <FlatList

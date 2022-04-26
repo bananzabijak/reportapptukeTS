@@ -59,6 +59,22 @@ export const editovatStyle = StyleSheet.create(
 
         },
 
+        zahlavi: {
+          backgroundColor:'#BB86FC',
+          position:"relative",
+          paddingBottom:10,
+          paddingTop:10,
+          borderTopEndRadius: 100,
+          borderBottomStartRadius: 100,
+          
+        },
+        nadpis: {
+          color: '#000000',
+          fontWeight: 'bold',
+          textAlign: 'center',    
+        },
+      
+
         selectButton: {
             borderRadius: 5,
             width: 150,

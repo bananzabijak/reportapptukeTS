@@ -7,7 +7,7 @@ import {
   Alert,
   Image,
 } from 'react-native';
-import {TextInput, List, Button} from 'react-native-paper';
+import {TextInput, List, Button, Title} from 'react-native-paper';
 import {editovatStyle} from './editovat.style';
 import {HeaderComponent} from '../../components/header/header.component';
 import firestore from '@react-native-firebase/firestore';
@@ -155,8 +155,7 @@ export const EditovatZavadu = ({navigation, route}) => {
         mistnost: mistnost,
         user: UserUID,
         image: image,
-        stav: "Upraveno",
-        datum: Date(),
+        stav: "Upraveno",        
       })
       .then(async () => {
         console.log('Zavada přidána');
@@ -170,7 +169,9 @@ export const EditovatZavadu = ({navigation, route}) => {
   return (
     <SafeAreaView>
       <ScrollView>
-        <HeaderComponent title="Editovat závadu" />
+      <View style={editovatStyle.zahlavi}> 
+          <Title style={editovatStyle.nadpis}>Editovat závadu</Title>
+          </View>
         <View style={editovatStyle.content}>
           <TextInput
             style={editovatStyle.nazev}

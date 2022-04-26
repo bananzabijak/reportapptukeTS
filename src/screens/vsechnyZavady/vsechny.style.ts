@@ -30,11 +30,21 @@ export const vsechnyStyle = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'left',
   },
+  zahlavi: {
+    backgroundColor:'#BB86FC',
+    position:"relative",
+    paddingBottom:10,
+    paddingTop:10,
+    borderTopEndRadius: 100,
+    borderBottomStartRadius: 100,
+    
+  },
   nadpis: {
     color: '#000000',
     fontWeight: 'bold',
     textAlign: 'center',    
   },
+
 
   fabka: {
     position: 'relative',    

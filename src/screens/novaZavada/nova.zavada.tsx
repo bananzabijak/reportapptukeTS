@@ -7,9 +7,8 @@ import {
   Alert,
   Image,
 } from 'react-native';
-import {TextInput, List, Button} from 'react-native-paper';
+import {TextInput, List, Button, Title} from 'react-native-paper';
 import {novaStyle} from './nova.style';
-import {HeaderComponent} from '../../components/header/header.component';
 import firestore from '@react-native-firebase/firestore';
 import {launchImageLibrary} from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
@@ -92,8 +91,7 @@ export const NovaZavada = ({navigation, route}: any) => {
         mistnost: mistnost,
         user: UserUID,
         image: image,
-        stav: "Nové",
-        datum: Date(),
+        stav: "Nové",        
       })
       .then(async () => {
         console.log('Zavada přidána');
@@ -113,7 +111,9 @@ export const NovaZavada = ({navigation, route}: any) => {
     <View>
       <SafeAreaView>
         <ScrollView>
-          <HeaderComponent title="Nová závada" />
+        <View style={novaStyle.zahlavi}> 
+          <Title style={novaStyle.nadpis}>Nová závada</Title>
+          </View>
           <View style={novaStyle.content}>
             <TextInput
               label="Název Závady"
