@@ -6,6 +6,7 @@ import {
   Platform,
   Alert,
   Image,
+  Text,
 } from 'react-native';
 import {TextInput, List, Button} from 'react-native-paper';
 import {editovatStyle} from './editovat.style';
@@ -119,8 +120,8 @@ export const EditovatZavadu = ({navigation, route}) => {
       setMistnost('');
       setTypZavady('');
       setObsah('');
-      setNazev('');  
-      setImage(null); 
+      setNazev('');
+      setImage(null);
     };
     //console.log(zavada);
   }, []);
@@ -131,7 +132,7 @@ export const EditovatZavadu = ({navigation, route}) => {
 
     console.log(zavada.get('nazev'));
 
-    return popisPredEditem; 
+    return popisPredEditem;
   };
 
   const getNazev = async zavada => {
@@ -154,7 +155,7 @@ export const EditovatZavadu = ({navigation, route}) => {
         mistnost: mistnost,
         user: UserUID,
         image: image,
-        stav: "Upraveno"
+        stav: 'Opraveno',
       })
       .then(async () => {
         console.log('Zavada přidána');
@@ -168,62 +169,30 @@ export const EditovatZavadu = ({navigation, route}) => {
   return (
     <SafeAreaView>
       <ScrollView>
-        <HeaderComponent title="Editovat závadu" />
-        <View style={editovatStyle.content}>
-          <TextInput
-            style={editovatStyle.nazev}
-            label="Název Závady"
-            maxLength={20}
-            onChangeText={newNazev => setNazev(newNazev)}
-            value={nazev}></TextInput>
-          <List.AccordionGroup>
-            <List.Accordion
-              title="Typ Závady"
-              expanded={expanded}
-              onPress={handlePress}
-              id="1">
-              <List.Item
-                style={editovatStyle.listItem}
-                title="Světla"
-                onPress={() => {
-                  setTypZavady('Světla');
-                }}
-              />
-              <List.Item
-                title="Židle"
-                onPress={() => {
-                  setTypZavady('Židle');
-                }}
-              />
-            </List.Accordion>
-            <List.Accordion
-              title="Místnost"
-              expanded={expanded}
-              onPress={handlePress}
-              id="2">
-              <List.Item
-                title="N902"
-                onPress={() => {
-                  setMistnost('N902');
-                }}
-              />
-              <List.Item
-                title="Posluchárna 1"
-                onPress={() => {
-                  setMistnost('Posluchárna');
-                }}
-              />
-            </List.Accordion>
-          </List.AccordionGroup>
-
-          <TextInput
-            multiline
-            numberOfLines={4}
-            style={editovatStyle.popis}
-            placeholder="Stručně popiště závadu"
-            maxLength={400}
-            onChangeText={newObsah => setObsah(newObsah)}
-            value={obsah}></TextInput>
+        <HeaderComponent title="Detail závady" />
+        <View style={editovatStyle.content}>        
+           
+            <View>
+              <Text>{nazev}</Text>
+            </View>
+            <View>
+              <Text>Typ závady:</Text>
+            </View>
+            <View>
+              <Text>{typZavady}</Text>
+            </View>         
+            <View>
+            <View>
+            <Text>Mistnost:</Text>
+          </View>
+            <Text>{mistnost}</Text>
+            </View>           
+          <View>
+            <Text>Popis závady:</Text>
+          </View>
+          <View>
+            <Text>{obsah}</Text>
+          </View>
 
           <View style={editovatStyle.imageContainer}>
             {image !== null ? (
@@ -234,12 +203,9 @@ export const EditovatZavadu = ({navigation, route}) => {
                 <Progress.Bar progress={transferred} width={300} />
               </View>
             ) : null}
-          </View>
-          <Button icon="camera" mode="contained" onPress={selectImage}>
-            Vybrat obrázek
-          </Button>
+          </View>          
           <Button icon="arrow-right" mode="contained" onPress={editZavadu}>
-            Editovat závadu
+            Označit za opravené
           </Button>
         </View>
       </ScrollView>

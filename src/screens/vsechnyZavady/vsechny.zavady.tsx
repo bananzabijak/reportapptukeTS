@@ -36,8 +36,7 @@ export const VsechnyZavady = ({navigation, route}: any) => {
     firestore()
       .collection<IZavada>('Zavady')
       // Filter results
-      .where('user', '==', UserUID)
-      .limit(10)
+      .where('stav', 'in', ['Nové', 'Upraveno'])         
       .get()
       .then(async querySnapshot => {
         const dataArr: any[] = [];
@@ -110,6 +109,7 @@ export const VsechnyZavady = ({navigation, route}: any) => {
             renderItem={({item}) => (
               <View style={vsechnyStyle.container}>
                 <Text style={vsechnyStyle.nazev}>{item.nazev}</Text>
+                <Text style={vsechnyStyle.stav}>{item.stav}</Text>
                 <View style={vsechnyStyle.popisek}>
                 <Text numberOfLines={1} ellipsizeMode="tail" style={{flex: 1}}>
                   {item.popis.slice(0, 30) + "..."}
@@ -130,7 +130,7 @@ export const VsechnyZavady = ({navigation, route}: any) => {
                   mode="contained"
                   style={vsechnyStyle.tlacitko}
                   onPress={() => editovatZavadu(item.id!)}>
-                  Editovat
+                  Zobrazit
                 </Button>
               </View>
             )}
