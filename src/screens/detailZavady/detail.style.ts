@@ -1,7 +1,7 @@
 import {StyleSheet} from 'react-native';
 import {theme} from '../../../App.style';
 
-export const editovatStyle = StyleSheet.create({
+export const detailStyle = StyleSheet.create({
   popis: {
     display: 'flex',
     flex: 1,

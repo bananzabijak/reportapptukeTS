@@ -36,7 +36,7 @@ export const NahlaseneZavady = ({navigation, route}: any) => {
     firestore()
       .collection<IZavada>('Zavady')
       // Filter results
-      .where('stav', 'in', ['Nové', 'Upraveno'])         
+      .where('stav', 'in', ['Nové', 'Upraveno'])              
       .get()
       .then(async querySnapshot => {
         const dataArr: any[] = [];

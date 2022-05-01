@@ -9,14 +9,14 @@ import {
   Text,
 } from 'react-native';
 import {TextInput, List, Button, Title} from 'react-native-paper';
-import {editovatStyle} from './editovat.style';
 import {HeaderComponent} from '../../components/header/header.component';
 import firestore from '@react-native-firebase/firestore';
 import {launchImageLibrary} from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
 import * as Progress from 'react-native-progress';
+import { detailStyle } from './detail.style';
 
-export const EditovatZavadu = ({navigation, route}) => {
+export const DetailZavady = ({navigation, route}) => {
   const [expanded, setExpanded] = React.useState(true);
 
   const {ZavadaID, UserUID, UserEmail} = route.params;
@@ -168,44 +168,44 @@ export const EditovatZavadu = ({navigation, route}) => {
 
   return (
     <SafeAreaView>
-      <ScrollView style={editovatStyle.container}>
-      <View style={editovatStyle.zahlavi}> 
-          <Title style={editovatStyle.nadpis}>Detail závady</Title>
+      <ScrollView style={detailStyle.container}>
+      <View style={detailStyle.zahlavi}> 
+          <Title style={detailStyle.nadpis}>Detail závady</Title>
           </View> 
-        <View style={editovatStyle.content}>
+        <View style={detailStyle.content}>
           <View>
-            <Text style={editovatStyle.nazev}>{nazev}</Text>
+            <Text style={detailStyle.nazev}>{nazev}</Text>
           </View>
           <View>
-            <Text style={editovatStyle.sekce}>Typ závady:</Text>
+            <Text style={detailStyle.sekce}>Typ závady:</Text>
           </View>
           <View>
             <Text>{typZavady}</Text>
           </View>
           <View>
             <View>
-              <Text style={editovatStyle.sekce}>Mistnost:</Text>
+              <Text style={detailStyle.sekce}>Mistnost:</Text>
             </View>
             <Text>{mistnost}</Text>
           </View>
           <View>
-            <Text style={editovatStyle.sekce}>Popis závady:</Text>
+            <Text style={detailStyle.sekce}>Popis závady:</Text>
           </View>
           <View>
             <Text>{obsah}</Text>
           </View>
 
-          <View style={editovatStyle.imageContainer}>
+          <View style={detailStyle.imageContainer}>
             {image !== null ? (
-              <Image source={{uri: image.uri}} style={editovatStyle.imageBox} />
+              <Image source={{uri: image.uri}} style={detailStyle.imageBox} />
             ) : null}
             {uploading ? (
-              <View style={editovatStyle.progressBarContainer}>
+              <View style={detailStyle.progressBarContainer}>
                 <Progress.Bar progress={transferred} width={300} />
               </View>
             ) : null}
           </View>
-          <Button style={editovatStyle.buttonOdeslat} icon="arrow-right" mode="contained" onPress={editZavadu}>
+          <Button style={detailStyle.buttonOdeslat} icon="arrow-right" mode="contained" onPress={editZavadu}>
             Označit za opravené
           </Button>
         </View>
