@@ -75,10 +75,9 @@ export const NovaZavada = ({navigation, route}: any) => {
       console.error(e);
     }
     setUploading(false);
-    Alert.alert('Zavada přidána!');
+    Alert.alert('Závada pridaná!');
     setImage(null);
   };
-
 
 
   const uploadZavadu = () => {
@@ -94,7 +93,7 @@ export const NovaZavada = ({navigation, route}: any) => {
         stav: "Nové",        
       })
       .then(async () => {
-        console.log('Zavada přidána');
+        console.log('Závada pridaná');
         await uploadImage();
         onPressNav();
       });
@@ -116,7 +115,7 @@ export const NovaZavada = ({navigation, route}: any) => {
           </View>
           <View style={novaStyle.content}>
             <TextInput
-              label="Název Závady"
+              label="Názov"
               onChangeText={newNazev => setNazev(newNazev)}
               maxLength={20}
               defaultValue={nazev}></TextInput>
@@ -127,33 +126,177 @@ export const NovaZavada = ({navigation, route}: any) => {
                 onPress={handlePress}
                 id="1">
                 <List.Item
-                  title="Světla"
+                  title="Svetla"
                   onPress={() => {
-                    setTypZavady('Světla');
+                    setTypZavady('Svetla');
                   }}
                 />
                 <List.Item
-                  title="Židle"
+                  title="Stoličky"
                   onPress={() => {
-                    setTypZavady('Židle');
+                    setTypZavady('Stoličky');
                   }}
                 />
               </List.Accordion>
               <List.Accordion
-                title="Místnost"
+                title="Miestnosť"
                 expanded={expanded}
                 onPress={handlePress}
                 id="2">
                 <List.Item
-                  title="N902"
+                  title="KKUI Sinčák"
                   onPress={() => {
-                    setMistnost('N902');
+                    setMistnost('KKUI Sinčák');
                   }}
                 />
                 <List.Item
-                  title="Posluchárna 1"
+                  title="KKUI virtual"
                   onPress={() => {
-                    setMistnost('Posluchárna');
+                    setMistnost('KKUI virtual');
+                  }}
+                />
+                <List.Item
+                  title="N3_018(LUI_1)"
+                  onPress={() => {
+                    setMistnost('N3_018(LUI_1)');
+                  }}
+                />
+                <List.Item
+                  title="N3_018(LUI_2)"
+                  onPress={() => {
+                    setMistnost('N3_018(LUI_2)');
+                  }}
+                />
+                <List.Item
+                  title="V4_147"
+                  onPress={() => {
+                    setMistnost('V4_147');
+                  }}
+                />
+                <List.Item
+                  title="V4_010"
+                  onPress={() => {
+                    setMistnost('V4_010');
+                  }}
+                />
+                <List.Item
+                  title="V4_146(V101b)"
+                  onPress={() => {
+                    setMistnost('V4_146(V101b)');
+                  }}
+                />
+                <List.Item
+                  title="V4_109(V144)"
+                  onPress={() => {
+                    setMistnost('V4_109(V144)');
+                  }}
+                />
+                <List.Item
+                  title="L9-B520"
+                  onPress={() => {
+                    setMistnost('L9-B520');
+                  }}
+                />
+                <List.Item
+                  title="V4_011(V002)"
+                  onPress={() => {
+                    setMistnost('V4_011(V002)');
+                  }}
+                />
+                <List.Item
+                  title="V4_V102"
+                  onPress={() => {
+                    setMistnost('V4_V102');
+                  }}
+                />
+                <List.Item
+                  title="L9-A536"
+                  onPress={() => {
+                    setMistnost('L9-A536');
+                  }}
+                />
+                <List.Item
+                  title="L9-A537"
+                  onPress={() => {
+                    setMistnost('L9-A537');
+                  }}
+                />
+                <List.Item
+                  title="L9-A504"
+                  onPress={() => {
+                    setMistnost('L9-A504');
+                  }}
+                />
+                <List.Item
+                  title="L9-B527"
+                  onPress={() => {
+                    setMistnost('L9-B527');
+                  }}
+                />
+                <List.Item
+                  title="L9-B529"
+                  onPress={() => {
+                    setMistnost('L9-B529');
+                  }}
+                />
+                <List.Item
+                  title="L9-B526"
+                  onPress={() => {
+                    setMistnost('L9-B526');
+                  }}
+                />
+                <List.Item
+                  title="L9-A512"
+                  onPress={() => {
+                    setMistnost('L9-A512');
+                  }}
+                />
+                <List.Item
+                  title="L9-B524"
+                  onPress={() => {
+                    setMistnost('L9-B524');
+                  }}
+                />
+                <List.Item
+                  title="L9-A538"
+                  onPress={() => {
+                    setMistnost('L9-A538');
+                  }}
+                />
+                <List.Item
+                  title="L9-B519/B"
+                  onPress={() => {
+                    setMistnost('L9-B519/B');
+                  }}
+                />
+                <List.Item
+                  title="L9-B518"
+                  onPress={() => {
+                    setMistnost('L9-B518');
+                  }}
+                />
+                <List.Item
+                  title="L9-A534"
+                  onPress={() => {
+                    setMistnost('L9-A534');
+                  }}
+                />
+                <List.Item
+                  title="L9-A532"
+                  onPress={() => {
+                    setMistnost('L9-A532');
+                  }}
+                />
+                <List.Item
+                  title="KPI virtual"
+                  onPress={() => {
+                    setMistnost('KPI virtual');
+                  }}
+                />
+                <List.Item
+                  title="L9-A514"
+                  onPress={() => {
+                    setMistnost('L9-A514');
                   }}
                 />
               </List.Accordion>
@@ -163,7 +306,7 @@ export const NovaZavada = ({navigation, route}: any) => {
               multiline
               numberOfLines={4}
               style={novaStyle.popis}
-              placeholder="Stručně popiště závadu"
+              placeholder="Stručne popíšte závadu"
               maxLength={400}
               onChangeText={newObsah => setObsah(newObsah)}
               defaultValue={obsah}></TextInput>
@@ -181,10 +324,10 @@ export const NovaZavada = ({navigation, route}: any) => {
 
           <View>
             <Button style={novaStyle.tlacitko} icon="camera" mode="contained" onPress={selectImage}>
-              Vybrat obrázek
+            Vybrať obrázok
             </Button>
             <Button style={novaStyle.tlacitko} icon="arrow-right" mode="contained" onPress={uploadZavadu}>
-              Nahlásit závadu
+            Nahlásiť závadu
             </Button>
           </View>
         </ScrollView>

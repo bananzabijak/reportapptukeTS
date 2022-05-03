@@ -103,7 +103,7 @@ export const VsechnyZavady = ({navigation, route}: any) => {
       
         <SafeAreaView>  
         <View style={vsechnyStyle.zahlavi}> 
-          <Title style={vsechnyStyle.nadpis}>Všechny závady</Title>
+          <Title style={vsechnyStyle.nadpis}>Všetky závady</Title>
           </View>
 
          <ScrollView>  
@@ -117,6 +117,9 @@ export const VsechnyZavady = ({navigation, route}: any) => {
                 <View style={vsechnyStyle.popisek}>
                 <Text numberOfLines={1} ellipsizeMode="tail" style={{flex: 1}}>
                   {item.popis.slice(0, 30) + "..."}
+                </Text>                
+                <Text numberOfLines={1} style={vsechnyStyle.stav}>
+                {item.stav}
                 </Text>
                 </View>
                 <View style={vsechnyStyle.ikonka}>
@@ -134,7 +137,7 @@ export const VsechnyZavady = ({navigation, route}: any) => {
                   mode="contained"
                   style={vsechnyStyle.tlacitko}
                   onPress={() => editovatZavadu(item.id!)}>
-                  Editovat
+                  Upraviť
                 </Button>
               </View>
             )}

@@ -38,6 +38,14 @@ export const LoginScreen = ({navigation}) => {
     auth()
       .signInWithEmailAndPassword(name, password)
       .then(() => {
+        if(user.uid == "trjjlGyxG0Pc62jxqPaNfcHAkJy1")
+        {
+          navigation.navigate('Nahlasene zavady', {
+            UserUID: user.uid,
+            UserEmail: user.email,
+          }); 
+        }
+        else
         navigation.navigate('Vsechny zavady', {
           UserUID: user.uid,
           UserEmail: user.email,
@@ -46,14 +54,14 @@ export const LoginScreen = ({navigation}) => {
       })
       .catch(error => {
         if (error.code == 'auth/invalid-email') {
-          Alert.alert('Zadali jste špatné uživatelské jméno!');
+          Alert.alert('Zadali jste zlé uživateľské meno!');
           console.log('That email address is invalid!');
         }
         if (error.code == 'auth/user-not-found') {
-          Alert.alert('K tomuto emailu neexistuje uživatelský účet');          
+          Alert.alert('K tomuto e mailu neexistuje užívateľský účet');          
         }        
         if (error.code == 'auth/wrong-password') {
-          Alert.alert('Zadali jste špatné heslo!');          
+          Alert.alert('Zadali ste zlé heslo!');          
         }       
       });
   };

@@ -155,10 +155,10 @@ export const EditovatZavadu = ({navigation, route}) => {
         mistnost: mistnost,
         user: UserUID,
         image: image,
-        stav: "Upraveno",        
+        stav: "Upravené",        
       })
       .then(async () => {
-        console.log('Zavada přidána');
+        console.log('Závada upravená');
         await uploadImage();
         returnToVsechyZavady();
       });
@@ -170,12 +170,12 @@ export const EditovatZavadu = ({navigation, route}) => {
     <SafeAreaView>
       <ScrollView>
       <View style={editovatStyle.zahlavi}> 
-          <Title style={editovatStyle.nadpis}>Editovat závadu</Title>
+          <Title style={editovatStyle.nadpis}>Upraviť závadu</Title>
           </View>
         <View style={editovatStyle.content}>
           <TextInput
             style={editovatStyle.nazev}
-            label="Název Závady"
+            label="Názov"
             maxLength={20}
             onChangeText={newNazev => setNazev(newNazev)}
             value={nazev}></TextInput>
@@ -187,20 +187,20 @@ export const EditovatZavadu = ({navigation, route}) => {
               id="1">
               <List.Item
                 style={editovatStyle.listItem}
-                title="Světla"
+                title="Svetla"
                 onPress={() => {
-                  setTypZavady('Světla');
+                  setTypZavady('Svetla');
                 }}
               />
               <List.Item
-                title="Židle"
+                title="Stoličky"
                 onPress={() => {
-                  setTypZavady('Židle');
+                  setTypZavady('Stoličky');
                 }}
               />
             </List.Accordion>
             <List.Accordion
-              title="Místnost"
+              title="Miestnosť"
               expanded={expanded}
               onPress={handlePress}
               id="2">
@@ -211,9 +211,9 @@ export const EditovatZavadu = ({navigation, route}) => {
                 }}
               />
               <List.Item
-                title="Posluchárna 1"
+                title="Poslucháreň 1"
                 onPress={() => {
-                  setMistnost('Posluchárna');
+                  setMistnost('Poslucháreň 1');
                 }}
               />
             </List.Accordion>
@@ -223,7 +223,9 @@ export const EditovatZavadu = ({navigation, route}) => {
             multiline
             numberOfLines={4}
             style={editovatStyle.popis}
-            placeholder="Stručně popiště závadu"
+            placeholder="
+            Stručne popíšte závadu
+            "
             maxLength={400}
             onChangeText={newObsah => setObsah(newObsah)}
             value={obsah}></TextInput>
@@ -239,10 +241,10 @@ export const EditovatZavadu = ({navigation, route}) => {
             ) : null}
           </View>
           <Button icon="camera" style={editovatStyle.tlacitko} mode="contained" onPress={selectImage}>
-            Vybrat obrázek
+            Vybrať obrázok
           </Button>
           <Button icon="arrow-right" style={editovatStyle.tlacitko} mode="contained" onPress={editZavadu}>
-            Editovat závadu
+            Upraviť závadu
           </Button>
         </View>
       </ScrollView>

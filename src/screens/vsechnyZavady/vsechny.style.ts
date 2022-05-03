@@ -30,6 +30,12 @@ export const vsechnyStyle = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'left',
   },
+
+  stav: {
+    color: 'green',
+    fontWeight: 'bold',
+    textAlign: 'left',
+  },
   zahlavi: {
     backgroundColor:'#BB86FC',
     position:"relative",

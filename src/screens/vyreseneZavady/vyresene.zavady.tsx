@@ -36,7 +36,7 @@ export const VyreseneZavady = ({navigation, route}: any) => {
     firestore()
       .collection<IZavada>('Zavady')
       // Filter results
-      .where('stav', 'in', ['Opraveno'])         
+      .where('stav', 'in', ['Opravené'])         
       .get()
       .then(async querySnapshot => {
         const dataArr: any[] = [];
@@ -59,7 +59,7 @@ export const VyreseneZavady = ({navigation, route}: any) => {
   }, [UserUID]);
 
   const navNovaZavada = () => {
-    navigation.navigate('Vsechny zavady', {
+    navigation.navigate('Nahlasene zavady', {
       UserUID: UserUID,
       UserEmail: UserEmail,
     });
@@ -101,7 +101,7 @@ export const VyreseneZavady = ({navigation, route}: any) => {
       
         <SafeAreaView>
           <View style={vyreneseStyle.zahlavi}> 
-          <Title style={vyreneseStyle.nadpis}>Vyřešené závady</Title>
+          <Title style={vyreneseStyle.nadpis}>Vyriešené závady</Title>
           </View> 
          <ScrollView>  
 
@@ -132,7 +132,7 @@ export const VyreseneZavady = ({navigation, route}: any) => {
                   mode="contained"
                   style={vyreneseStyle.tlacitko}
                   onPress={() => editovatZavadu(item.id!)}>
-                  Zobrazit
+                  Zobraziť
                 </Button>
               </View>
             )}
@@ -146,7 +146,7 @@ export const VyreseneZavady = ({navigation, route}: any) => {
                   mode="contained"
                   style={vyreneseStyle.filter}
                   onPress={navNovaZavada}>
-                  Nahlášené
+                  Nahlásené
                 </Button>
       </View> 
     </View>

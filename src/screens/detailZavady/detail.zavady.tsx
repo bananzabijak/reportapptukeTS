@@ -88,7 +88,7 @@ export const DetailZavady = ({navigation, route}) => {
       console.error(e);
     }
     setUploading(false);
-    Alert.alert('Zavada editována!');
+    Alert.alert('Závada editovaná!');
     setImage(null);
   };
 
@@ -155,10 +155,10 @@ export const DetailZavady = ({navigation, route}) => {
         mistnost: mistnost,
         user: UserUID,
         image: image,
-        stav: 'Opraveno',
+        stav: 'Opravené',
       })
       .then(async () => {
-        console.log('Zavada přidána');
+        console.log('Stav závady zmenený');
         await uploadImage();
         returnToVsechyZavady();
       });
@@ -184,7 +184,7 @@ export const DetailZavady = ({navigation, route}) => {
           </View>
           <View>
             <View>
-              <Text style={detailStyle.sekce}>Mistnost:</Text>
+              <Text style={detailStyle.sekce}>Miestnosť:</Text>
             </View>
             <Text>{mistnost}</Text>
           </View>
@@ -206,7 +206,7 @@ export const DetailZavady = ({navigation, route}) => {
             ) : null}
           </View>
           <Button style={detailStyle.buttonOdeslat} icon="arrow-right" mode="contained" onPress={editZavadu}>
-            Označit za opravené
+            Označit za vyriešené
           </Button>
         </View>
       </ScrollView>
