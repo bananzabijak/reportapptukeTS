@@ -97,6 +97,12 @@ export const vyreneseStyle = StyleSheet.create({
     
   },
 
+  typy: {
+    color: '#000000',    
+    textAlign: 'left',
+  },
+  
+
   content: {
     display: 'flex',
     flex: 1,

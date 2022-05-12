@@ -18,7 +18,7 @@ import * as Progress from 'react-native-progress';
 export const EditovatZavadu = ({navigation, route}) => {
   const [expanded, setExpanded] = React.useState(true);
 
-  const {ZavadaID, UserUID, UserEmail} = route.params;
+  const {ZavadaID, UserUID, UserEmail, ImageUrl} = route.params;
 
   const handlePress = () => setExpanded(!expanded);
 
@@ -33,7 +33,7 @@ export const EditovatZavadu = ({navigation, route}) => {
   const returnToVsechyZavady = () => {
     navigation.navigate('Vsechny zavady', {
       UserUID: UserUID,
-      UserEmail: UserEmail,
+      UserEmail: UserEmail,      
     });
   };
 
@@ -232,7 +232,7 @@ export const EditovatZavadu = ({navigation, route}) => {
 
           <View style={editovatStyle.imageContainer}>
             {image !== null ? (
-              <Image source={{uri: image.uri}} style={editovatStyle.imageBox} />
+              <Image source={{uri: ImageUrl}} style={editovatStyle.imageBox} />
             ) : null}
             {uploading ? (
               <View style={editovatStyle.progressBarContainer}>

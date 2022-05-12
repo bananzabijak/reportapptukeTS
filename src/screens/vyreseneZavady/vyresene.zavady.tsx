@@ -65,11 +65,12 @@ export const VyreseneZavady = ({navigation, route}: any) => {
     });
   };
 
-  const editovatZavadu = (zavadaID: string) => {
-    navigation.navigate('Editovat zavadu', {
+  const editovatZavadu = (zavadaID: string, imageUrl: string) => {
+    navigation.navigate('Detail zavady', {
       ZavadaID: zavadaID,
       UserUID: UserUID,
       UserEmail: UserEmail,
+      ImageUrl: imageUrl
     });
   };
 
@@ -113,6 +114,12 @@ export const VyreseneZavady = ({navigation, route}: any) => {
                 <Text style={vyreneseStyle.nazev}>{item.nazev}</Text>
                 <Text style={vyreneseStyle.stav}>{item.stav}</Text>
                 <View style={vyreneseStyle.popisek}>
+                <Text numberOfLines={1} style={vyreneseStyle.typy}>
+                    {item.mistnost}
+                  </Text>
+                  <Text numberOfLines={1} style={vyreneseStyle.typy}>
+                   {item.typ}
+                  </Text>
                 <Text numberOfLines={1} ellipsizeMode="tail" style={{flex: 1}}>
                   {item.popis.slice(0, 30) + "..."}
                 </Text>
@@ -131,7 +138,7 @@ export const VyreseneZavady = ({navigation, route}: any) => {
                   icon="pencil"
                   mode="contained"
                   style={vyreneseStyle.tlacitko}
-                  onPress={() => editovatZavadu(item.id!)}>
+                  onPress={() => editovatZavadu(item.id!, item.imageUrl!)}>
                   Zobraziť
                 </Button>
               </View>

@@ -19,7 +19,7 @@ import { detailStyle } from './detail.style';
 export const DetailZavady = ({navigation, route}) => {
   const [expanded, setExpanded] = React.useState(true);
 
-  const {ZavadaID, UserUID, UserEmail} = route.params;
+  const {ZavadaID, UserUID, UserEmail, ImageUrl} = route.params;
 
   const handlePress = () => setExpanded(!expanded);
 
@@ -32,7 +32,7 @@ export const DetailZavady = ({navigation, route}) => {
   const [typZavady, setTypZavady] = useState('');
 
   const returnToVsechyZavady = () => {
-    navigation.navigate('Vsechny zavady', {
+    navigation.navigate('Nahlasene zavady', {
       UserUID: UserUID,
       UserEmail: UserEmail,
     });
@@ -197,7 +197,7 @@ export const DetailZavady = ({navigation, route}) => {
 
           <View style={detailStyle.imageContainer}>
             {image !== null ? (
-              <Image source={{uri: image.uri}} style={detailStyle.imageBox} />
+              <Image source={{uri: ImageUrl}} style={detailStyle.imageBox} />
             ) : null}
             {uploading ? (
               <View style={detailStyle.progressBarContainer}>

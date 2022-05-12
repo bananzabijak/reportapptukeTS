@@ -31,6 +31,11 @@ export const nahlaseneStyle = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'left',
   },
+
+  typy: {
+    color: '#000000',    
+    textAlign: 'left',
+  },
   
   stav: {
     color: 'green',

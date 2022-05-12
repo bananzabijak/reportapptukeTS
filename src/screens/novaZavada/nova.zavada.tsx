@@ -72,7 +72,7 @@ export const NovaZavada = ({navigation, route}: any) => {
     try {
       await task;
     } catch (e) {
-      console.error(e);
+      console.error(e);      
     }
     setUploading(false);
     Alert.alert('Závada pridaná!');
@@ -81,6 +81,27 @@ export const NovaZavada = ({navigation, route}: any) => {
 
 
   const uploadZavadu = () => {
+    if(image == null){
+      Alert.alert('Pridajte fotografiu závady!');
+    }
+    else if(nazev.length < 1 ){
+
+      Alert.alert('Zadajte názov závady!');
+    }
+    else if(obsah.length < 1 ){
+
+      Alert.alert('Nevyplnili ste názov závady');
+    }
+    else if(typZavady.length < 1 ){
+
+      Alert.alert('Nevyplnili ste typ závady');
+    }
+    else if(mistnost.length < 1 ){
+
+      Alert.alert('Nevyplnili ste miestnost závady');
+      
+    }
+      else
     firestore()
       .collection('Zavady')
       .add({

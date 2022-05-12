@@ -67,11 +67,12 @@ export const VsechnyZavady = ({navigation, route}: any) => {
     });
   };
 
-  const editovatZavadu = (zavadaID: string) => {
+  const editovatZavadu = (zavadaID: string, imageUrl: string) => {
     navigation.navigate('Editovat zavadu', {
       ZavadaID: zavadaID,
       UserUID: UserUID,
       UserEmail: UserEmail,
+      ImageUrl: imageUrl,
     });
   };
 
@@ -97,17 +98,13 @@ export const VsechnyZavady = ({navigation, route}: any) => {
   });
 
   return (
-    <View style={vsechnyStyle.content}> 
-  
-      
-      
-        <SafeAreaView>  
-        <View style={vsechnyStyle.zahlavi}> 
+    <View style={vsechnyStyle.content}>
+      <SafeAreaView>
+        <View style={vsechnyStyle.zahlavi}>
           <Title style={vsechnyStyle.nadpis}>Všetky závady</Title>
-          </View>
+        </View>
 
-         <ScrollView>  
-
+        <ScrollView>
           <FlatList
             data={arrayZavad}
             keyExtractor={item => item.id!}
@@ -115,12 +112,21 @@ export const VsechnyZavady = ({navigation, route}: any) => {
               <View style={vsechnyStyle.container}>
                 <Text style={vsechnyStyle.nazev}>{item.nazev}</Text>
                 <View style={vsechnyStyle.popisek}>
-                <Text numberOfLines={1} ellipsizeMode="tail" style={{flex: 1}}>
-                  {item.popis.slice(0, 30) + "..."}
-                </Text>                
-                <Text numberOfLines={1} style={vsechnyStyle.stav}>
-                {item.stav}
-                </Text>
+                  <Text numberOfLines={1} style={vsechnyStyle.typy}>
+                    {item.mistnost}
+                  </Text>
+                  <Text numberOfLines={1} style={vsechnyStyle.typy}>
+                   {item.typ}
+                  </Text>
+                  <Text
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                    style={{flex: 1}}>
+                    {item.popis.slice(0, 30) + '...'}
+                  </Text>                  
+                  <Text numberOfLines={1} style={vsechnyStyle.stav}>
+                    {item.stav}
+                  </Text>
                 </View>
                 <View style={vsechnyStyle.ikonka}>
                   {item.imageUrl && (
@@ -136,15 +142,15 @@ export const VsechnyZavady = ({navigation, route}: any) => {
                   icon="pencil"
                   mode="contained"
                   style={vsechnyStyle.tlacitko}
-                  onPress={() => editovatZavadu(item.id!)}>
+                  onPress={() => editovatZavadu(item.id!, item.imageUrl!)}>
                   Upraviť
                 </Button>
               </View>
             )}
-          /> 
-          </ScrollView>
-        </SafeAreaView>
-     
+          />
+        </ScrollView>
+      </SafeAreaView>
+
       <View style={vsechnyStyle.corner}>
         <FAB
           style={vsechnyStyle.fabka} //proč nefunguje style? nebo spíš proč abosulte position set na right 0 bottom 0 furt bere position textu ne celého view
