@@ -7,12 +7,13 @@ import {
   Alert,
   Image,
 } from 'react-native';
-import {TextInput, List, Button, Title} from 'react-native-paper';
+import {TextInput, List, Button, Title, Menu} from 'react-native-paper';
 import {novaStyle} from './nova.style';
 import firestore from '@react-native-firebase/firestore';
 import {launchImageLibrary} from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
 import * as Progress from 'react-native-progress';
+import Autocomplete from '../../components/Autocomplete';
 
 export const NovaZavada = ({navigation, route}: any) => {
   const {UserUID, UserEmail} = route.params;
@@ -56,6 +57,14 @@ export const NovaZavada = ({navigation, route}: any) => {
     });
   };
 
+  const vyberTypu = (typ) =>{
+    setTypZavady(typ);
+    handlePress();
+
+
+
+  }
+
   const uploadImage = async () => {
     const {uri} = image;
     const filename = uri.substring(uri.lastIndexOf('/') + 1);
@@ -63,7 +72,7 @@ export const NovaZavada = ({navigation, route}: any) => {
     setUploading(true);
     setTransferred(0);
     const task = storage().ref(uri).putFile(uploadUri);
-    
+
     task.on('state_changed', snapshot => {
       setTransferred(
         Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 10000,
@@ -72,52 +81,41 @@ export const NovaZavada = ({navigation, route}: any) => {
     try {
       await task;
     } catch (e) {
-      console.error(e);      
+      console.error(e);
     }
     setUploading(false);
     Alert.alert('Závada pridaná!');
     setImage(null);
   };
 
-
   const uploadZavadu = () => {
-    if(image == null){
+    if (image == null) {
       Alert.alert('Pridajte fotografiu závady!');
-    }
-    else if(nazev.length < 1 ){
-
+    } else if (nazev.length < 1) {
       Alert.alert('Zadajte názov závady!');
-    }
-    else if(obsah.length < 1 ){
-
-      Alert.alert('Nevyplnili ste názov závady');
-    }
-    else if(typZavady.length < 1 ){
-
+    } else if (obsah.length < 1) {
+      Alert.alert('Nevyplnili ste popis závady');
+    } else if (typZavady.length < 1) {
       Alert.alert('Nevyplnili ste typ závady');
-    }
-    else if(mistnost.length < 1 ){
-
+    } else if (mistnost.length < 1) {
       Alert.alert('Nevyplnili ste miestnost závady');
-      
-    }
-      else
-    firestore()
-      .collection('Zavady')
-      .add({
-        nazev: nazev,
-        popis: obsah,
-        typ: typZavady,
-        mistnost: mistnost,
-        user: UserUID,
-        image: image,
-        stav: "Nové",        
-      })
-      .then(async () => {
-        console.log('Závada pridaná');
-        await uploadImage();
-        onPressNav();
-      });
+    } else
+      firestore()
+        .collection('Zavady')
+        .add({
+          nazev: nazev,
+          popis: obsah,
+          typ: typZavady,
+          mistnost: mistnost,
+          user: UserUID,
+          image: image,
+          stav: 'Nové',
+        })
+        .then(async () => {
+          console.log('Závada pridaná');
+          await uploadImage();
+          onPressNav();
+        });
   };
 
   const onPressNav = () => {
@@ -127,12 +125,14 @@ export const NovaZavada = ({navigation, route}: any) => {
     });
   };
 
+  const typyZavad = [''];
+
   return (
     <View>
       <SafeAreaView>
-        <ScrollView>
-        <View style={novaStyle.zahlavi}> 
-          <Title style={novaStyle.nadpis}>Nová závada</Title>
+        <ScrollView keyboardShouldPersistTaps="always">
+          <View style={novaStyle.zahlavi}>
+            <Title style={novaStyle.nadpis}>Nová závada</Title>
           </View>
           <View style={novaStyle.content}>
             <TextInput
@@ -140,6 +140,26 @@ export const NovaZavada = ({navigation, route}: any) => {
               onChangeText={newNazev => setNazev(newNazev)}
               maxLength={20}
               defaultValue={nazev}></TextInput>
+
+            <View style={novaStyle.autocompleteContainer}></View>
+            <View >
+        <Autocomplete
+            value={''}
+            style={[novaStyle.input]}
+            containerStyle={novaStyle.autocompleteContainer}
+            label="Typ závady"
+            data={['Svetla', 'Stoličky', 'Tabula', 'Projektor', 'Topenie', 'Počítače', 'Dvere', 'Iné']}
+            menuStyle={{backgroundColor: 'white'}}
+            onChange={newTyp => setTypZavady(newTyp)}
+        />
+      </View> 
+
+      <TextInput
+        label="Typ závady"
+        onChangeText={newTyp => vyberTypu(newTyp)}
+        maxLength={0}
+        defaultValue={typZavady}></TextInput>
+
             <List.AccordionGroup>
               <List.Accordion
                 title="Typ Závady"
@@ -344,11 +364,19 @@ export const NovaZavada = ({navigation, route}: any) => {
           </View>
 
           <View>
-            <Button style={novaStyle.tlacitko} icon="camera" mode="contained" onPress={selectImage}>
-            Vybrať obrázok
+            <Button
+              style={novaStyle.tlacitko}
+              icon="camera"
+              mode="contained"
+              onPress={selectImage}>
+              Vybrať obrázok
             </Button>
-            <Button style={novaStyle.tlacitko} icon="arrow-right" mode="contained" onPress={uploadZavadu}>
-            Nahlásiť závadu
+            <Button
+              style={novaStyle.tlacitko}
+              icon="arrow-right"
+              mode="contained"
+              onPress={uploadZavadu}>
+              Nahlásiť závadu
             </Button>
           </View>
         </ScrollView>

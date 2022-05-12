@@ -18,7 +18,7 @@ import * as Progress from 'react-native-progress';
 export const EditovatZavadu = ({navigation, route}) => {
   const [expanded, setExpanded] = React.useState(true);
 
-  const {ZavadaID, UserUID, UserEmail, ImageUrl} = route.params;
+  const {ZavadaID, UserUID, UserEmail, ImageUrl, DefaultImage} = route.params;
 
   const handlePress = () => setExpanded(!expanded);
 
@@ -69,6 +69,7 @@ export const EditovatZavadu = ({navigation, route}) => {
   };
 
   const uploadImage = async () => {
+    
     const {uri} = image;
     const filename = uri.substring(uri.lastIndexOf('/') + 1);
     const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
@@ -158,9 +159,11 @@ export const EditovatZavadu = ({navigation, route}) => {
         stav: "Upravené",        
       })
       .then(async () => {
-        console.log('Závada upravená');
+        console.log('Závada upravená');       
         await uploadImage();
         returnToVsechyZavady();
+      
+        
       });
   };
 

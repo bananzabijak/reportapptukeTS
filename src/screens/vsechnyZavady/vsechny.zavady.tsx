@@ -67,12 +67,13 @@ export const VsechnyZavady = ({navigation, route}: any) => {
     });
   };
 
-  const editovatZavadu = (zavadaID: string, imageUrl: string) => {
+  const editovatZavadu = (zavadaID: string, imageUrl: string, image: { uri?: string | undefined; }) => {
     navigation.navigate('Editovat zavadu', {
       ZavadaID: zavadaID,
       UserUID: UserUID,
       UserEmail: UserEmail,
       ImageUrl: imageUrl,
+      DefaultImage: image,
     });
   };
 
@@ -142,7 +143,7 @@ export const VsechnyZavady = ({navigation, route}: any) => {
                   icon="pencil"
                   mode="contained"
                   style={vsechnyStyle.tlacitko}
-                  onPress={() => editovatZavadu(item.id!, item.imageUrl!)}>
+                  onPress={() => editovatZavadu(item.id!, item.imageUrl!, item.image!)}>
                   Upraviť
                 </Button>
               </View>

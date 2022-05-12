@@ -9,8 +9,8 @@ import {
   StyleSheet,
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
-import {nahlaseneStyle} from './nahlasene.style';
-import {Button, Title, FAB, TextInput, Appbar, Divider, Searchbar} from 'react-native-paper';
+import {filtrovaneStyle} from './filtrovane.style';
+import {Button, Title, FAB} from 'react-native-paper';
 import {ScrollView} from 'react-native-gesture-handler';
 import storage from '@react-native-firebase/storage';
 
@@ -28,13 +28,9 @@ interface IZavada {
   stav: string;
 }
 
-export const NahlaseneZavady = ({navigation, route}: any) => {
-  const {UserUID, UserEmail} = route.params;
+export const FiltrovaneZavady = ({navigation, route}: any) => {
+  const {UserUID, UserEmail, Data} = route.params;
   const [arrayZavad, setArray] = useState<IZavada[]>([]);
-  const [searchQuery, setSearchQuery] = React.useState('');
-  const [filter, setFilter]= useState(false);
-
-  const onChangeSearch = query => setSearchQuery(query);
 
   const getVsechnyZavadyOdUsera = useCallback(async () => {
     firestore()
@@ -63,31 +59,20 @@ export const NahlaseneZavady = ({navigation, route}: any) => {
   }, [UserUID]);
 
   const navNovaZavada = () => {
-    navigation.navigate('Vyresene zavady', {
+    navigation.navigate('Nahlasene zavady', {
       UserUID: UserUID,
       UserEmail: UserEmail,
     });
   };
 
-  const navFiltrZavada = () => {
-    navigation.navigate('Filtrovane zavady', {
-      Data: filtrovatZavady(),
-      UserEmail: UserEmail,
-      UserUID: UserUID
-    });
-  };
-
-
-
   const filtrovatZavady = () => {
 
     const data = arrayZavad.filter(function(item){
-      return (item.typ.toLowerCase().includes(searchQuery.toLowerCase()) || item.mistnost.toLowerCase().includes(searchQuery.toLowerCase())|| item.popis.toLowerCase().includes(searchQuery.toLowerCase()));
+      return item.typ == 'Tabula';
    }).map(function({id, imageUrl, mistnost, nazev, popis, typ, user, image, stav}){
-       return {id, imageUrl, mistnost, nazev, popis, typ, user, image, stav}  ;
+       return {id, imageUrl, mistnost, nazev, popis, typ, user, image, stav};
    });
    console.log(data);
-   return data;
   }
 
   const editovatZavadu = (zavadaID: string, imageUrl: string) => {
@@ -122,48 +107,38 @@ export const NahlaseneZavady = ({navigation, route}: any) => {
   });
 
   return (
-    <View style={nahlaseneStyle.content}> 
+    <View style={filtrovaneStyle.content}> 
   
       
       
         <SafeAreaView>  
-        <View style={nahlaseneStyle.zahlavi}> 
-          <Title style={nahlaseneStyle.nadpis}>Nahlásené závady</Title>
-          </View>  
-
-          <View style={nahlaseneStyle.filterContainer}>   
-          <Searchbar
-      placeholder="Vyhladať v závadách"
-      onChangeText={onChangeSearch}
-      value={searchQuery}
-      onIconPress={navFiltrZavada}
-    />         
-       
-            </View>                 
+        <View style={filtrovaneStyle.zahlavi}> 
+          <Title style={filtrovaneStyle.nadpis}>Filtrované závady</Title>
+          </View>
          <ScrollView>  
 
           <FlatList
-           data={arrayZavad}
+            data={Data}
             keyExtractor={item => item.id!}
             renderItem={({item}) => (
-              <View style={nahlaseneStyle.container}>
-                <Text style={nahlaseneStyle.nazev}>{item.nazev}</Text>
-                <Text style={nahlaseneStyle.stav}>{item.stav}</Text>
-                <View style={nahlaseneStyle.popisek}>
-                <Text numberOfLines={1} style={nahlaseneStyle.typy}>
+              <View style={filtrovaneStyle.container}>
+                <Text style={filtrovaneStyle.nazev}>{item.nazev}</Text>
+                <Text style={filtrovaneStyle.stav}>{item.stav}</Text>
+                <View style={filtrovaneStyle.popisek}>
+                <Text numberOfLines={1} style={filtrovaneStyle.typy}>
                     {item.mistnost}
                   </Text>
-                  <Text numberOfLines={1} style={nahlaseneStyle.typy}>
+                  <Text numberOfLines={1} style={filtrovaneStyle.typy}>
                    {item.typ}
                   </Text>
                 <Text numberOfLines={1} ellipsizeMode="tail" style={{flex: 1}}>
                   {item.popis.slice(0, 30) + "..."}
                 </Text>
                 </View>
-                <View style={nahlaseneStyle.ikonka}>
+                <View style={filtrovaneStyle.ikonka}>
                   {item.imageUrl && (
                     <Image
-                      style={nahlaseneStyle.fotka}
+                      style={filtrovaneStyle.fotka}
                       source={{
                         uri: item.imageUrl,
                       }}
@@ -173,7 +148,7 @@ export const NahlaseneZavady = ({navigation, route}: any) => {
                 <Button
                   icon="pencil"
                   mode="contained"
-                  style={nahlaseneStyle.tlacitko}
+                  style={filtrovaneStyle.tlacitko}
                   onPress={() => editovatZavadu(item.id!, item.imageUrl!)}>
                   Zobraziť
                 </Button>
@@ -183,16 +158,15 @@ export const NahlaseneZavady = ({navigation, route}: any) => {
           </ScrollView>
         </SafeAreaView>
      
-        <View style={nahlaseneStyle.corner}>        
+        <View style={filtrovaneStyle.corner}>        
         <Button
-                  icon="folder-check-outline"
+                  icon="arrow-left-top-bold"
                   mode="contained"
-                  style={nahlaseneStyle.filter}
+                  style={filtrovaneStyle.filter}
                   onPress={navNovaZavada}>
-                  Vyriešeno
+                  Zpět
                 </Button>
       </View>       
-      
     </View>
   );
 };

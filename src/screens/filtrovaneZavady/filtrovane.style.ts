@@ -2,7 +2,7 @@ import {StyleSheet} from 'react-native';
 import {black} from 'react-native-paper/lib/typescript/styles/colors';
 import {theme} from '../../../App.style';
 
-export const nahlaseneStyle = StyleSheet.create({
+export const filtrovaneStyle = StyleSheet.create({
   container: {
     backgroundColor: "#dfe7fd",
     paddingTop: 20,
@@ -101,51 +101,7 @@ export const nahlaseneStyle = StyleSheet.create({
     color:"#cddafd"
     
   },
-  filter2: {
-    position: 'absolute',   
-    left:0,
-    right:150,
-    marginTop: 10,
-    marginRight: 20,
-    marginBottom:10,    
-    paddingLeft:2,
-    paddingRight:2,
-    color:"#cddafd",
-    display: 'flex',
-    flex: 1,
-    
-  },
-  filterInput: {
-    position: 'relative',
-    marginLeft:200,
-    paddingLeft:0,
-    paddingRight:0,
-    marginTop: 0,
-    marginRight: 0,
-    marginBottom:0,
-    display: 'flex',
-    flex: 1,    
-  },
-  filterContainer: {
-    position: 'relative',
-    marginLeft:0,
-    paddingLeft:2,
-    paddingRight:2,
-    marginBottom:40,
-    marginTop:5,
-    height:20
-    
-    
-    
-    
-    
-  },
-  navVar: {
-    position: 'relative',   
-    marginTop:5,
-    marginBottom:5
-    
-  },
+
   content: {
     display: 'flex',
     flex: 1,
@@ -163,7 +119,6 @@ export const nahlaseneStyle = StyleSheet.create({
     position:"absolute",
     left:0,
     bottom:0
-    
   },
   popisek: {
     position:"relative",

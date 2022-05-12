@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import {vyreneseStyle} from './vyresene.style';
-import {Button, Title, FAB} from 'react-native-paper';
+import {Button, Title, FAB, Searchbar} from 'react-native-paper';
 import {ScrollView} from 'react-native-gesture-handler';
 import storage from '@react-native-firebase/storage';
 
@@ -31,6 +31,11 @@ interface IZavada {
 export const VyreseneZavady = ({navigation, route}: any) => {
   const {UserUID, UserEmail} = route.params;
   const [arrayZavad, setArray] = useState<IZavada[]>([]);
+  const [searchQuery, setSearchQuery] = React.useState('');
+  
+ 
+
+  const onChangeSearch = query => setSearchQuery(query);
 
   const getVsechnyZavadyOdUsera = useCallback(async () => {
     firestore()
@@ -74,6 +79,27 @@ export const VyreseneZavady = ({navigation, route}: any) => {
     });
   };
 
+  const navFiltrZavada = () => {
+    navigation.navigate('Filtrovane zavady', {
+      Data: filtrovatZavady(),
+      UserEmail: UserEmail,
+      UserUID: UserUID
+    });
+  };
+
+
+
+  const filtrovatZavady = () => {
+
+    const data = arrayZavad.filter(function(item){
+      return (item.typ.toLowerCase().includes(searchQuery.toLowerCase()) || item.mistnost.toLowerCase().includes(searchQuery.toLowerCase())|| item.popis.toLowerCase().includes(searchQuery.toLowerCase()));
+   }).map(function({id, imageUrl, mistnost, nazev, popis, typ, user, image, stav}){
+       return {id, imageUrl, mistnost, nazev, popis, typ, user, image, stav}  ;
+   });
+   console.log(data);
+   return data;
+  }
+
   useEffect(() => {
     getVsechnyZavadyOdUsera();
     return () => {
@@ -104,6 +130,15 @@ export const VyreseneZavady = ({navigation, route}: any) => {
           <View style={vyreneseStyle.zahlavi}> 
           <Title style={vyreneseStyle.nadpis}>Vyriešené závady</Title>
           </View> 
+          <View style={vyreneseStyle.filterContainer}>   
+          <Searchbar
+      placeholder="Vyhladať v závadách"
+      onChangeText={onChangeSearch}
+      value={searchQuery}
+      onIconPress={navFiltrZavada}
+    />         
+       
+            </View> 
          <ScrollView>  
 
           <FlatList

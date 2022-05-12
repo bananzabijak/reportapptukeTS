@@ -101,6 +101,20 @@ export const vyreneseStyle = StyleSheet.create({
     color: '#000000',    
     textAlign: 'left',
   },
+  filterContainer: {
+    position: 'relative',
+    marginLeft:0,
+    paddingLeft:2,
+    paddingRight:2,
+    marginBottom:40,
+    marginTop:5,
+    height:20
+    
+    
+    
+    
+    
+  },
   
 
   content: {
