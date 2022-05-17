@@ -7,17 +7,17 @@ import {
   Alert,
   Image,
 } from 'react-native';
-import {TextInput, List, Button, Title, Menu} from 'react-native-paper';
+import {TextInput, List, Button, Title} from 'react-native-paper';
 import {novaStyle} from './nova.style';
 import firestore from '@react-native-firebase/firestore';
 import {launchImageLibrary} from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
 import * as Progress from 'react-native-progress';
-import Autocomplete from '../../components/Autocomplete';
 
 export const NovaZavada = ({navigation, route}: any) => {
   const {UserUID, UserEmail} = route.params;
   const [expanded, setExpanded] = React.useState(true);
+  const [accordionIdExpanded, setAccordionIdExpanded] = useState<number | string | undefined>(undefined);
 
   const handlePress = () => setExpanded(!expanded);
 
@@ -57,14 +57,6 @@ export const NovaZavada = ({navigation, route}: any) => {
     });
   };
 
-  const vyberTypu = (typ) =>{
-    setTypZavady(typ);
-    handlePress();
-
-
-
-  }
-
   const uploadImage = async () => {
     const {uri} = image;
     const filename = uri.substring(uri.lastIndexOf('/') + 1);
@@ -72,7 +64,7 @@ export const NovaZavada = ({navigation, route}: any) => {
     setUploading(true);
     setTransferred(0);
     const task = storage().ref(uri).putFile(uploadUri);
-
+    
     task.on('state_changed', snapshot => {
       setTransferred(
         Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 10000,
@@ -84,38 +76,29 @@ export const NovaZavada = ({navigation, route}: any) => {
       console.error(e);
     }
     setUploading(false);
-    Alert.alert('Závada pridaná!');
+    Alert.alert('Zavada přidána!');
     setImage(null);
   };
 
+
+
   const uploadZavadu = () => {
-    if (image == null) {
-      Alert.alert('Pridajte fotografiu závady!');
-    } else if (nazev.length < 1) {
-      Alert.alert('Zadajte názov závady!');
-    } else if (obsah.length < 1) {
-      Alert.alert('Nevyplnili ste popis závady');
-    } else if (typZavady.length < 1) {
-      Alert.alert('Nevyplnili ste typ závady');
-    } else if (mistnost.length < 1) {
-      Alert.alert('Nevyplnili ste miestnost závady');
-    } else
-      firestore()
-        .collection('Zavady')
-        .add({
-          nazev: nazev,
-          popis: obsah,
-          typ: typZavady,
-          mistnost: mistnost,
-          user: UserUID,
-          image: image,
-          stav: 'Nové',
-        })
-        .then(async () => {
-          console.log('Závada pridaná');
-          await uploadImage();
-          onPressNav();
-        });
+    firestore()
+      .collection('Zavady')
+      .add({
+        nazev: nazev,
+        popis: obsah,
+        typ: typZavady,
+        mistnost: mistnost,
+        user: UserUID,
+        image: image,
+        stav: "Nové",        
+      })
+      .then(async () => {
+        console.log('Zavada přidána');
+        await uploadImage();
+        onPressNav();
+      });
   };
 
   const onPressNav = () => {
@@ -125,221 +108,252 @@ export const NovaZavada = ({navigation, route}: any) => {
     });
   };
 
-  const typyZavad = [''];
+  const handleAccordionPress = (index: number | string | undefined) => {
+    if (accordionIdExpanded === index) {
+      setAccordionIdExpanded(undefined)
+    } else {
+      setAccordionIdExpanded(index)
+    }
+  }
+
+  const handleSetTypZavady = (title: string) => {
+    setTypZavady(title);
+    setAccordionIdExpanded(undefined)
+  }
+
+  const handleSetMistnost = (title: string) => {
+      setMistnost(title);
+      setAccordionIdExpanded(undefined)
+  }
 
   return (
     <View>
       <SafeAreaView>
-        <ScrollView keyboardShouldPersistTaps="always">
-          <View style={novaStyle.zahlavi}>
-            <Title style={novaStyle.nadpis}>Nová závada</Title>
+        <ScrollView>
+        <View style={novaStyle.zahlavi}> 
+          <Title style={novaStyle.nadpis}>Nová závada</Title>
           </View>
           <View style={novaStyle.content}>
             <TextInput
-              label="Názov"
+              label="Název Závady"
               onChangeText={newNazev => setNazev(newNazev)}
               maxLength={20}
               defaultValue={nazev}></TextInput>
-
-            <View style={novaStyle.autocompleteContainer}></View>
-            <View >
-        <Autocomplete
-            value={''}
-            style={[novaStyle.input]}
-            containerStyle={novaStyle.autocompleteContainer}
-            label="Typ závady"
-            data={['Svetla', 'Stoličky', 'Tabula', 'Projektor', 'Topenie', 'Počítače', 'Dvere', 'Iné']}
-            menuStyle={{backgroundColor: 'white'}}
-            onChange={newTyp => setTypZavady(newTyp)}
-        />
-      </View> 
-
-      <TextInput
-        label="Typ závady"
-        onChangeText={newTyp => vyberTypu(newTyp)}
-        maxLength={0}
-        defaultValue={typZavady}></TextInput>
-
-            <List.AccordionGroup>
+            <List.AccordionGroup expandedId={accordionIdExpanded} onAccordionPress={(i) => handleAccordionPress(i)}>
               <List.Accordion
                 title="Typ Závady"
-                expanded={expanded}
-                onPress={handlePress}
+                onPress={() => setAccordionIdExpanded(undefined)}
                 id="1">
                 <List.Item
                   title="Svetla"
                   onPress={() => {
-                    setTypZavady('Svetla');
+                    handleSetTypZavady('Svetla');
                   }}
                 />
                 <List.Item
                   title="Stoličky"
                   onPress={() => {
-                    setTypZavady('Stoličky');
+                    handleSetTypZavady('Stoličky');
                   }}
                 />
+                <List.Item
+                  title="Tabula"
+                  onPress={() => {
+                    handleSetTypZavady('Tabula');
+                  }}
+                />
+                <List.Item
+                  title="Projektor"
+                  onPress={() => {
+                    handleSetTypZavady('Projektor');
+                  }}
+                />
+                <List.Item
+                  title="Topenie"
+                  onPress={() => {
+                    handleSetTypZavady('Topenie');
+                  }}
+                />
+                <List.Item
+                  title="Počítače"
+                  onPress={() => {
+                    handleSetTypZavady('Počítače');
+                  }}
+                />
+                <List.Item
+                  title="Dvere"
+                  onPress={() => {
+                    handleSetTypZavady('Dvere');
+                  }}
+                />                
+                <List.Item
+                  title="Iné"
+                  onPress={() => {
+                    handleSetTypZavady('Iné');
+                  }}
+                />
+
               </List.Accordion>
               <List.Accordion
-                title="Miestnosť"
-                expanded={expanded}
-                onPress={handlePress}
+                title="Místnost"
                 id="2">
                 <List.Item
                   title="KKUI Sinčák"
                   onPress={() => {
-                    setMistnost('KKUI Sinčák');
+                    handleSetMistnost('KKUI Sinčák');
                   }}
                 />
                 <List.Item
                   title="KKUI virtual"
                   onPress={() => {
-                    setMistnost('KKUI virtual');
+                    handleSetMistnost('KKUI virtual');
                   }}
                 />
                 <List.Item
                   title="N3_018(LUI_1)"
                   onPress={() => {
-                    setMistnost('N3_018(LUI_1)');
+                    handleSetMistnost('N3_018(LUI_1)');
                   }}
                 />
                 <List.Item
                   title="N3_018(LUI_2)"
                   onPress={() => {
-                    setMistnost('N3_018(LUI_2)');
+                    handleSetMistnost('N3_018(LUI_2)');
                   }}
                 />
                 <List.Item
                   title="V4_147"
                   onPress={() => {
-                    setMistnost('V4_147');
+                    handleSetMistnost('V4_147');
                   }}
                 />
                 <List.Item
                   title="V4_010"
                   onPress={() => {
-                    setMistnost('V4_010');
+                    handleSetMistnost('V4_010');
                   }}
                 />
                 <List.Item
                   title="V4_146(V101b)"
                   onPress={() => {
-                    setMistnost('V4_146(V101b)');
+                    handleSetMistnost('V4_146(V101b)');
                   }}
                 />
                 <List.Item
                   title="V4_109(V144)"
                   onPress={() => {
-                    setMistnost('V4_109(V144)');
+                    handleSetMistnost('V4_109(V144)');
                   }}
                 />
                 <List.Item
                   title="L9-B520"
                   onPress={() => {
-                    setMistnost('L9-B520');
+                    handleSetMistnost('L9-B520');
                   }}
                 />
                 <List.Item
                   title="V4_011(V002)"
                   onPress={() => {
-                    setMistnost('V4_011(V002)');
+                    handleSetMistnost('V4_011(V002)');
                   }}
                 />
                 <List.Item
                   title="V4_V102"
                   onPress={() => {
-                    setMistnost('V4_V102');
+                    handleSetMistnost('V4_V102');
                   }}
                 />
                 <List.Item
                   title="L9-A536"
                   onPress={() => {
-                    setMistnost('L9-A536');
+                    handleSetMistnost('L9-A536');
                   }}
                 />
                 <List.Item
                   title="L9-A537"
                   onPress={() => {
-                    setMistnost('L9-A537');
+                    handleSetMistnost('L9-A537');
                   }}
                 />
                 <List.Item
                   title="L9-A504"
                   onPress={() => {
-                    setMistnost('L9-A504');
+                    handleSetMistnost('L9-A504');
                   }}
                 />
                 <List.Item
                   title="L9-B527"
                   onPress={() => {
-                    setMistnost('L9-B527');
+                    handleSetMistnost('L9-B527');
                   }}
                 />
                 <List.Item
                   title="L9-B529"
                   onPress={() => {
-                    setMistnost('L9-B529');
+                    handleSetMistnost('L9-B529');
                   }}
                 />
                 <List.Item
                   title="L9-B526"
                   onPress={() => {
-                    setMistnost('L9-B526');
+                    handleSetMistnost('L9-B526');
                   }}
                 />
                 <List.Item
                   title="L9-A512"
                   onPress={() => {
-                    setMistnost('L9-A512');
+                    handleSetMistnost('L9-A512');
                   }}
                 />
                 <List.Item
                   title="L9-B524"
                   onPress={() => {
-                    setMistnost('L9-B524');
+                    handleSetMistnost('L9-B524');
                   }}
                 />
                 <List.Item
                   title="L9-A538"
                   onPress={() => {
-                    setMistnost('L9-A538');
+                    handleSetMistnost('L9-A538');
                   }}
                 />
                 <List.Item
                   title="L9-B519/B"
                   onPress={() => {
-                    setMistnost('L9-B519/B');
+                    handleSetMistnost('L9-B519/B');
                   }}
                 />
                 <List.Item
                   title="L9-B518"
                   onPress={() => {
-                    setMistnost('L9-B518');
+                    handleSetMistnost('L9-B518');
                   }}
                 />
                 <List.Item
                   title="L9-A534"
                   onPress={() => {
-                    setMistnost('L9-A534');
+                    handleSetMistnost('L9-A534');
                   }}
                 />
                 <List.Item
                   title="L9-A532"
                   onPress={() => {
-                    setMistnost('L9-A532');
+                    handleSetMistnost('L9-A532');
                   }}
                 />
                 <List.Item
                   title="KPI virtual"
                   onPress={() => {
-                    setMistnost('KPI virtual');
+                    handleSetMistnost('KPI virtual');
                   }}
                 />
                 <List.Item
                   title="L9-A514"
                   onPress={() => {
-                    setMistnost('L9-A514');
+                    handleSetMistnost('L9-A514');
                   }}
                 />
+
               </List.Accordion>
             </List.AccordionGroup>
 
@@ -347,7 +361,7 @@ export const NovaZavada = ({navigation, route}: any) => {
               multiline
               numberOfLines={4}
               style={novaStyle.popis}
-              placeholder="Stručne popíšte závadu"
+              placeholder="Stručně popiště závadu"
               maxLength={400}
               onChangeText={newObsah => setObsah(newObsah)}
               defaultValue={obsah}></TextInput>
@@ -364,23 +378,15 @@ export const NovaZavada = ({navigation, route}: any) => {
           </View>
 
           <View>
-            <Button
-              style={novaStyle.tlacitko}
-              icon="camera"
-              mode="contained"
-              onPress={selectImage}>
-              Vybrať obrázok
+            <Button style={novaStyle.tlacitko} icon="camera" mode="contained" onPress={selectImage}>
+              Vybrat obrázek
             </Button>
-            <Button
-              style={novaStyle.tlacitko}
-              icon="arrow-right"
-              mode="contained"
-              onPress={uploadZavadu}>
-              Nahlásiť závadu
+            <Button style={novaStyle.tlacitko} icon="arrow-right" mode="contained" onPress={uploadZavadu}>
+              Nahlásit závadu
             </Button>
           </View>
         </ScrollView>
       </SafeAreaView>
-    </View>
+    </View> 
   );
 };

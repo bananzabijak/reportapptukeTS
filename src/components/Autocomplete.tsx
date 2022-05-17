@@ -1,6 +1,5 @@
 import { View } from "react-native";
 import { Menu, TextInput } from "react-native-paper";
-import { bs } from "../../App.style";
 import React, { useState } from "react";
 
 const Autocomplete = ({
