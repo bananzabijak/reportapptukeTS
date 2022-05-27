@@ -110,16 +110,7 @@ export const VyreseneZavady = ({navigation, route}: any) => {
   useEffect(() => {
     LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
   }, []);
-
-  // Temporary stylesheet, delete after refactoring
-  const styles = StyleSheet.create({
-    img: {
-      flex: 1,
-      width: 50,
-      height: 50,
-      resizeMode: 'cover',
-    },
-  });
+ 
 
   return (
     <View style={vyreneseStyle.content}> 

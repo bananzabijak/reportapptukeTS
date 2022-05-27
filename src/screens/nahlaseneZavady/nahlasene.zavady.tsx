@@ -31,8 +31,7 @@ interface IZavada {
 export const NahlaseneZavady = ({navigation, route}: any) => {
   const {UserUID, UserEmail} = route.params;
   const [arrayZavad, setArray] = useState<IZavada[]>([]);
-  const [searchQuery, setSearchQuery] = React.useState('');
-  const [filter, setFilter]= useState(false);
+  const [searchQuery, setSearchQuery] = React.useState(''); 
 
   const onChangeSearch = query => setSearchQuery(query);
 
@@ -109,17 +108,7 @@ export const NahlaseneZavady = ({navigation, route}: any) => {
 
   useEffect(() => {
     LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
-  }, []);
-
-  // Temporary stylesheet, delete after refactoring
-  const styles = StyleSheet.create({
-    img: {
-      flex: 1,
-      width: 50,
-      height: 50,
-      resizeMode: 'cover',
-    },
-  });
+  }, []); 
 
   return (
     <View style={nahlaseneStyle.content}> 

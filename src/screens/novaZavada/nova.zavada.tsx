@@ -16,20 +16,13 @@ import * as Progress from 'react-native-progress';
 
 export const NovaZavada = ({navigation, route}: any) => {
   const {UserUID, UserEmail} = route.params;
-  const [expanded, setExpanded] = React.useState(true);
-  const [accordionIdExpanded, setAccordionIdExpanded] = useState<number | string | undefined>(undefined);
-
-  const handlePress = () => setExpanded(!expanded);
-
-  // const zavadyCollection = firestore().collection('Zavady');
-  // const reference = storage().ref(
-  //   'gs://reportapptukets.appspot.com/Zavady/Fotky',
-  // );
+  const [accordionIdExpanded, setAccordionIdExpanded] = useState<
+    number | string | undefined
+  >(undefined);
   const [nazev, setNazev] = useState('');
   const [obsah, setObsah] = useState('');
   const [mistnost, setMistnost] = useState('');
   const [typZavady, setTypZavady] = useState('');
-
   const [image, setImage] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [transferred, setTransferred] = useState(0);
@@ -64,7 +57,7 @@ export const NovaZavada = ({navigation, route}: any) => {
     setUploading(true);
     setTransferred(0);
     const task = storage().ref(uri).putFile(uploadUri);
-    
+
     task.on('state_changed', snapshot => {
       setTransferred(
         Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 10000,
@@ -80,25 +73,35 @@ export const NovaZavada = ({navigation, route}: any) => {
     setImage(null);
   };
 
-
-
   const uploadZavadu = () => {
-    firestore()
-      .collection('Zavady')
-      .add({
-        nazev: nazev,
-        popis: obsah,
-        typ: typZavady,
-        mistnost: mistnost,
-        user: UserUID,
-        image: image,
-        stav: "Nové",        
-      })
-      .then(async () => {
-        console.log('Zavada přidána');
-        await uploadImage();
-        onPressNav();
-      });
+    if (nazev.length == 0) {
+      Alert.alert('Zadajte názov závady!');
+    } else if (obsah.length == 0) {
+      Alert.alert('Vyplnte obsah závady!');
+    } else if (typZavady.length == 0) {
+      Alert.alert('Zvolte typ závady');
+    } else if (mistnost.length == 0) {
+      Alert.alert('Zvolte miestnost závady');
+    } else if (image == null) {
+      Alert.alert('Zvolte fotku závady');
+    } else {
+      firestore()
+        .collection('Zavady')
+        .add({
+          nazev: nazev,
+          popis: obsah,
+          typ: typZavady,
+          mistnost: mistnost,
+          user: UserUID,
+          image: image,
+          stav: 'Nové',
+        })
+        .then(async () => {
+          console.log('Zavada přidána');
+          await uploadImage();
+          onPressNav();
+        });
+    }
   };
 
   const onPressNav = () => {
@@ -110,28 +113,28 @@ export const NovaZavada = ({navigation, route}: any) => {
 
   const handleAccordionPress = (index: number | string | undefined) => {
     if (accordionIdExpanded === index) {
-      setAccordionIdExpanded(undefined)
+      setAccordionIdExpanded(undefined);
     } else {
-      setAccordionIdExpanded(index)
+      setAccordionIdExpanded(index);
     }
-  }
+  };
 
   const handleSetTypZavady = (title: string) => {
     setTypZavady(title);
-    setAccordionIdExpanded(undefined)
-  }
+    setAccordionIdExpanded(undefined);
+  };
 
   const handleSetMistnost = (title: string) => {
-      setMistnost(title);
-      setAccordionIdExpanded(undefined)
-  }
+    setMistnost(title);
+    setAccordionIdExpanded(undefined);
+  };
 
   return (
     <View>
       <SafeAreaView>
         <ScrollView>
-        <View style={novaStyle.zahlavi}> 
-          <Title style={novaStyle.nadpis}>Nová závada</Title>
+          <View style={novaStyle.zahlavi}>
+            <Title style={novaStyle.nadpis}>Nová závada</Title>
           </View>
           <View style={novaStyle.content}>
             <TextInput
@@ -139,7 +142,9 @@ export const NovaZavada = ({navigation, route}: any) => {
               onChangeText={newNazev => setNazev(newNazev)}
               maxLength={20}
               defaultValue={nazev}></TextInput>
-            <List.AccordionGroup expandedId={accordionIdExpanded} onAccordionPress={(i) => handleAccordionPress(i)}>
+            <List.AccordionGroup
+              expandedId={accordionIdExpanded}
+              onAccordionPress={i => handleAccordionPress(i)}>
               <List.Accordion
                 title="Typ Závady"
                 onPress={() => setAccordionIdExpanded(undefined)}
@@ -185,18 +190,15 @@ export const NovaZavada = ({navigation, route}: any) => {
                   onPress={() => {
                     handleSetTypZavady('Dvere');
                   }}
-                />                
+                />
                 <List.Item
                   title="Iné"
                   onPress={() => {
                     handleSetTypZavady('Iné');
                   }}
                 />
-
               </List.Accordion>
-              <List.Accordion
-                title="Místnost"
-                id="2">
+              <List.Accordion title="Místnost" id="2">
                 <List.Item
                   title="KKUI Sinčák"
                   onPress={() => {
@@ -353,7 +355,6 @@ export const NovaZavada = ({navigation, route}: any) => {
                     handleSetMistnost('L9-A514');
                   }}
                 />
-
               </List.Accordion>
             </List.AccordionGroup>
 
@@ -378,15 +379,23 @@ export const NovaZavada = ({navigation, route}: any) => {
           </View>
 
           <View>
-            <Button style={novaStyle.tlacitko} icon="camera" mode="contained" onPress={selectImage}>
+            <Button
+              style={novaStyle.tlacitko}
+              icon="camera"
+              mode="contained"
+              onPress={selectImage}>
               Vybrat obrázek
             </Button>
-            <Button style={novaStyle.tlacitko} icon="arrow-right" mode="contained" onPress={uploadZavadu}>
+            <Button
+              style={novaStyle.tlacitko}
+              icon="arrow-right"
+              mode="contained"
+              onPress={uploadZavadu}>
               Nahlásit závadu
             </Button>
           </View>
         </ScrollView>
       </SafeAreaView>
-    </View> 
+    </View>
   );
 };

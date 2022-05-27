@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import {TextInput, List, Button, Title} from 'react-native-paper';
 import {editovatStyle} from './editovat.style';
-import {HeaderComponent} from '../../components/header/header.component';
 import firestore from '@react-native-firebase/firestore';
 import {launchImageLibrary} from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
@@ -23,8 +22,7 @@ export const EditovatZavadu = ({navigation, route}) => {
   const handlePress = () => setExpanded(!expanded);
 
   const zavadyCollection = firestore().collection('Zavady');
-
-  //const [zavada, setZavada] = useState<IZavada>();
+  
   const [nazev, setNazev] = useState('');
   const [obsah, setObsah] = useState('');
   const [mistnost, setMistnost] = useState('');
@@ -41,9 +39,6 @@ export const EditovatZavadu = ({navigation, route}) => {
   const [uploading, setUploading] = useState(false);
   const [transferred, setTransferred] = useState(0);
 
-  const reference = storage().ref(
-    'gs://reportapptukets.appspot.com/Zavady/Fotky',
-  );
 
   const selectImage = () => {
     const options = {
@@ -75,8 +70,7 @@ export const EditovatZavadu = ({navigation, route}) => {
     const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
     setUploading(true);
     setTransferred(0);
-    const task = storage().ref(uri).putFile(uploadUri);
-    // set progress state
+    const task = storage().ref(uri).putFile(uploadUri);    
     task.on('state_changed', snapshot => {
       setTransferred(
         Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 10000,
@@ -100,18 +94,16 @@ export const EditovatZavadu = ({navigation, route}) => {
       .then(documentSnapshot => {
         const dataZavady = documentSnapshot.data();
         console.log('data', dataZavady);
-        // setZavada(dataZavady);
+        
         setMistnost(dataZavady?.mistnost);
         setTypZavady(dataZavady?.typ);
         setObsah(dataZavady?.popis);
         setNazev(dataZavady?.nazev);
         setImage(dataZavady?.image);
-        //  console.log("Zavada" , zavada);
+        
       });
 
-    //console.log("Zavada venku" , zavada);
-
-    //return zavada ; // chci vracet závadu
+    
   };
 
   useEffect(() => {
@@ -124,28 +116,22 @@ export const EditovatZavadu = ({navigation, route}) => {
       setImage(null); 
       
     };
-    //console.log(zavada);
+   
   }, []);
-
-  const getPopis = async (zavada: {get: (arg0: string) => any}) => {
-    const popisPredEditem = zavada.get('popis'); //tu bych chtěl tady krmit
-    console.log(zavada);
-
-    console.log(zavada.get('nazev'));
-
-    return popisPredEditem; 
-  };
-
-  const getNazev = async zavada => {
-    const nazevPredEditem = zavada.get('nazev');
-    console.log(zavada);
-
-    console.log(zavada.get('nazev'));
-
-    return nazevPredEditem; // to samé
-  };
+ 
 
   const editZavadu = () => {
+    if (nazev.length == 0) {
+      Alert.alert('Zadajte názov závady!');
+    } else if (obsah.length == 0) {
+      Alert.alert('Vyplnte obsah závady!');
+    } else if (typZavady.length == 0) {
+      Alert.alert('Zvolte typ závady');
+    } else if (mistnost.length == 0) {
+      Alert.alert('Zvolte miestnost závady');
+    } else if (image == null) {
+      Alert.alert('Zvolte fotku závady');
+    } else {
     firestore()
       .collection('Zavady')
       .doc(ZavadaID)
@@ -164,10 +150,9 @@ export const EditovatZavadu = ({navigation, route}) => {
         returnToVsechyZavady();
       
         
-      });
+      });}
   };
-
-  // const subscriber = firestore().collection("Zavady").doc('9N4bnOvZyQaLMIvJyVpC').onSnapshot(doc => { }) tady jsem dělal pokusy pak pro vypisování závad
+ 
 
   return (
     <SafeAreaView>
@@ -251,8 +236,7 @@ export const EditovatZavadu = ({navigation, route}) => {
           </Button>
         </View>
       </ScrollView>
-
-      {/* <BottomComponent /> */}
+      
     </SafeAreaView>
   );
 };

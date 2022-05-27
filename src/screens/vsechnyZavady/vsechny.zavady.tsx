@@ -5,8 +5,7 @@ import {
   Text,
   View,
   LogBox,
-  Image,
-  StyleSheet,
+  Image,  
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import {vsechnyStyle} from './vsechny.style';
@@ -37,8 +36,7 @@ export const VsechnyZavady = ({navigation, route}: any) => {
     firestore()
       .collection<IZavada>('Zavady')
       // Filter results
-      .where('user', '==', UserUID)
-      .limit(10)
+      .where('user', '==', UserUID)      
       .get()
       .then(async querySnapshot => {
         const dataArr: any[] = [];
@@ -68,7 +66,7 @@ export const VsechnyZavady = ({navigation, route}: any) => {
   };
 
   const editovatZavadu = (zavadaID: string, imageUrl: string, image: { uri?: string | undefined; }) => {
-    navigation.navigate('Editovat zavadu', {
+    navigation.navigate('Editovat zavadu', {  
       ZavadaID: zavadaID,
       UserUID: UserUID,
       UserEmail: UserEmail,
@@ -88,16 +86,7 @@ export const VsechnyZavady = ({navigation, route}: any) => {
     LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
   }, []);
 
-  // Temporary stylesheet, delete after refactoring
-  const styles = StyleSheet.create({
-    img: {
-      flex: 1,
-      width: 50,
-      height: 50,
-      resizeMode: 'cover',
-    },
-  });
-
+  
   return (
     <View style={vsechnyStyle.content}>
       <SafeAreaView>
@@ -154,7 +143,7 @@ export const VsechnyZavady = ({navigation, route}: any) => {
 
       <View style={vsechnyStyle.corner}>
         <FAB
-          style={vsechnyStyle.fabka} //proč nefunguje style? nebo spíš proč abosulte position set na right 0 bottom 0 furt bere position textu ne celého view
+          style={vsechnyStyle.fabka} 
           icon="plus"
           onPress={navNovaZavada}
         />

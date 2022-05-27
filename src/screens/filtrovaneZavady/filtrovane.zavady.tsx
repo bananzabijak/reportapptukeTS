@@ -29,51 +29,15 @@ interface IZavada {
 }
 
 export const FiltrovaneZavady = ({navigation, route}: any) => {
-  const {UserUID, UserEmail, Data} = route.params;
-  const [arrayZavad, setArray] = useState<IZavada[]>([]);
-
-  const getVsechnyZavadyOdUsera = useCallback(async () => {
-    firestore()
-      .collection<IZavada>('Zavady')
-      // Filter results
-      .where('stav', 'in', ['Nové', 'Upravené'])              
-      .get()
-      .then(async querySnapshot => {
-        const dataArr: any[] = [];
-        for await (const documentSnapshot of querySnapshot.docs) {
-          const data = documentSnapshot.data();
-          let imageUrl = null;
-          if (data.image?.uri) {
-            imageUrl = await storage().ref(data.image.uri).getDownloadURL();
-          }
-
-          const newZavada = {
-            id: documentSnapshot.id,
-            imageUrl,
-            ...data,
-          };
-          dataArr.push(newZavada);
-        }
-        setArray(dataArr);
-      });
-  }, [UserUID]);
+  const {UserUID, UserEmail, Data} = route.params; 
+  
 
   const navNovaZavada = () => {
     navigation.navigate('Nahlasene zavady', {
       UserUID: UserUID,
       UserEmail: UserEmail,
     });
-  };
-
-  const filtrovatZavady = () => {
-
-    const data = arrayZavad.filter(function(item){
-      return item.typ == 'Tabula';
-   }).map(function({id, imageUrl, mistnost, nazev, popis, typ, user, image, stav}){
-       return {id, imageUrl, mistnost, nazev, popis, typ, user, image, stav};
-   });
-   console.log(data);
-  }
+  };  
 
   const editovatZavadu = (zavadaID: string, imageUrl: string) => {
     navigation.navigate('Detail zavady', {
@@ -84,28 +48,12 @@ export const FiltrovaneZavady = ({navigation, route}: any) => {
       
     });
   };
-
-  useEffect(() => {
-    getVsechnyZavadyOdUsera();
-    return () => {
-      setArray([]);
-    };
-  }, [getVsechnyZavadyOdUsera, route]);
-
+  
   useEffect(() => {
     LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
   }, []);
 
-  // Temporary stylesheet, delete after refactoring
-  const styles = StyleSheet.create({
-    img: {
-      flex: 1,
-      width: 50,
-      height: 50,
-      resizeMode: 'cover',
-    },
-  });
-
+ 
   return (
     <View style={filtrovaneStyle.content}> 
   
