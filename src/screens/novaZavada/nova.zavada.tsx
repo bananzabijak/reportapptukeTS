@@ -93,6 +93,7 @@ export const NovaZavada = ({navigation, route}: any) => {
           typ: typZavady,
           mistnost: mistnost,
           user: UserUID,
+          contact: UserEmail,
           image: image,
           stav: 'Nové',
         })

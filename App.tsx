@@ -11,6 +11,8 @@ import { VyreseneZavady } from './src/screens/vyreseneZavady/vyresene.zavady';
 import { NahlaseneZavady } from './src/screens/nahlaseneZavady/nahlasene.zavady';
 import { DetailZavady } from './src/screens/detailZavady/detail.zavady';
 import { FiltrovaneZavady } from './src/screens/filtrovaneZavady/filtrovane.zavady';
+import { AdminZavady } from './src/screens/Admin/adminZavady/admin.zavady';
+import { AdminDetailZavady } from './src/screens/Admin/adminDetail/admin.detail.zavady';
 
 const Stack = createStackNavigator();
 
@@ -29,8 +31,9 @@ const App = () => {
         <Stack.Screen name="Vyresene zavady" component= {VyreseneZavady} options={{header: () => null}}/>   
         <Stack.Screen name="Nahlasene zavady" component= {NahlaseneZavady} options={{header: () => null}}/>   
         <Stack.Screen name="Detail zavady" component= {DetailZavady} options={{header: () => null}}/>  
-        <Stack.Screen name="Filtrovane zavady" component= {FiltrovaneZavady} options={{header: () => null}}/>  
-
+        <Stack.Screen name="Filtrovane zavady" component= {FiltrovaneZavady} options={{header: () => null}}/> 
+        <Stack.Screen name="Admin zavady" component= {AdminZavady} options={{header: () => null}}/>   
+        <Stack.Screen name="Admin detail zavady" component= {AdminDetailZavady} options={{header: () => null}}/>  
       </Stack.Navigator>     
       </PaperProvider >
     </NavigationContainer>

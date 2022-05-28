@@ -22,6 +22,7 @@ export const DetailZavady = ({navigation, route}) => {
   const [obsah, setObsah] = useState('');
   const [mistnost, setMistnost] = useState('');
   const [typZavady, setTypZavady] = useState('');
+  const [contact, setContact] = useState('');
 
   const returnToVsechyZavady = () => {
     navigation.navigate('Nahlasene zavady', {
@@ -46,6 +47,7 @@ export const DetailZavady = ({navigation, route}) => {
         setObsah(dataZavady?.popis);
         setNazev(dataZavady?.nazev);
         setImage(dataZavady?.image);
+        setContact(dataZavady?.contact);
         
       });
 
@@ -107,6 +109,12 @@ export const DetailZavady = ({navigation, route}) => {
             <Text>{mistnost}</Text>
           </View>
           <View>
+            <View>
+              <Text style={detailStyle.sekce}>Kontant:</Text>
+            </View>
+            <Text>{contact}</Text>
+          </View>
+          <View>
             <Text style={detailStyle.sekce}>Popis závady:</Text>
           </View>
           <View>
@@ -116,12 +124,7 @@ export const DetailZavady = ({navigation, route}) => {
           <View style={detailStyle.imageContainer}>
             {image !== null ? (
               <Image source={{uri: ImageUrl}} style={detailStyle.imageBox} />
-            ) : null}
-            {uploading ? (
-              <View style={detailStyle.progressBarContainer}>
-                <Progress.Bar progress={transferred} width={300} />
-              </View>
-            ) : null}
+            ) : null}            
           </View>
           <Button style={detailStyle.buttonOdeslat} icon="arrow-right" mode="contained" onPress={editZavadu}>
             Označit za vyriešené

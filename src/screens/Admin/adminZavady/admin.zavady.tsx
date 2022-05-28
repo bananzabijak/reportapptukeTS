@@ -5,12 +5,11 @@ import {
   Text,
   View,
   LogBox,
-  Image,
-  StyleSheet,
+  Image,  
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
-import {nahlaseneStyle} from './nahlasene.style';
-import {Button, Title, FAB, TextInput, Appbar, Divider, Searchbar} from 'react-native-paper';
+import {adminZavadyStyle} from './admin.zavady.style';
+import {Button, Title, Searchbar} from 'react-native-paper';
 import {ScrollView} from 'react-native-gesture-handler';
 import storage from '@react-native-firebase/storage';
 
@@ -22,15 +21,13 @@ interface IZavada {
   popis: string;
   typ: string;
   user: string;
-  contact: string;
   image?: {
     uri?: string;
   };
   stav: string;
-
 }
 
-export const NahlaseneZavady = ({navigation, route}: any) => {
+export const AdminZavady = ({navigation, route}: any) => {
   const {UserUID, UserEmail} = route.params;
   const [arrayZavad, setArray] = useState<IZavada[]>([]);
   const [searchQuery, setSearchQuery] = React.useState(''); 
@@ -92,7 +89,7 @@ export const NahlaseneZavady = ({navigation, route}: any) => {
   }
 
   const editovatZavadu = (zavadaID: string, imageUrl: string) => {
-    navigation.navigate('Detail zavady', {
+    navigation.navigate('Admin detail zavady', {
       ZavadaID: zavadaID,
       UserUID: UserUID,
       UserEmail: UserEmail,
@@ -113,16 +110,16 @@ export const NahlaseneZavady = ({navigation, route}: any) => {
   }, []); 
 
   return (
-    <View style={nahlaseneStyle.content}> 
+    <View style={adminZavadyStyle.content}> 
   
       
       
         <SafeAreaView>  
-        <View style={nahlaseneStyle.zahlavi}> 
-          <Title style={nahlaseneStyle.nadpis}>Nahlásené závady</Title>
+        <View style={adminZavadyStyle.zahlavi}> 
+          <Title style={adminZavadyStyle.nadpis}>Nahlásené závady</Title>
           </View>  
 
-          <View style={nahlaseneStyle.filterContainer}>   
+          <View style={adminZavadyStyle.filterContainer}>   
           <Searchbar
       placeholder="Vyhladať v závadách"
       onChangeText={onChangeSearch}
@@ -137,24 +134,24 @@ export const NahlaseneZavady = ({navigation, route}: any) => {
            data={arrayZavad}
             keyExtractor={item => item.id!}
             renderItem={({item}) => (
-              <View style={nahlaseneStyle.container}>
-                <Text style={nahlaseneStyle.nazev}>{item.nazev}</Text>
-                <Text style={nahlaseneStyle.stav}>{item.stav}</Text>                
-                <View style={nahlaseneStyle.popisek}>
-                <Text numberOfLines={1} style={nahlaseneStyle.typy}>
+              <View style={adminZavadyStyle.container}>
+                <Text style={adminZavadyStyle.nazev}>{item.nazev}</Text>
+                <Text style={adminZavadyStyle.stav}>{item.stav}</Text>
+                <View style={adminZavadyStyle.popisek}>
+                <Text numberOfLines={1} style={adminZavadyStyle.typy}>
                     {item.mistnost}
                   </Text>
-                  <Text numberOfLines={1} style={nahlaseneStyle.typy}>
+                  <Text numberOfLines={1} style={adminZavadyStyle.typy}>
                    {item.typ}
                   </Text>
                 <Text numberOfLines={1} ellipsizeMode="tail" style={{flex: 1}}>
                   {item.popis.slice(0, 30) + "..."}
                 </Text>
                 </View>
-                <View style={nahlaseneStyle.ikonka}>
+                <View style={adminZavadyStyle.ikonka}>
                   {item.imageUrl && (
                     <Image
-                      style={nahlaseneStyle.fotka}
+                      style={adminZavadyStyle.fotka}
                       source={{
                         uri: item.imageUrl,
                       }}
@@ -164,7 +161,7 @@ export const NahlaseneZavady = ({navigation, route}: any) => {
                 <Button
                   icon="pencil"
                   mode="contained"
-                  style={nahlaseneStyle.tlacitko}
+                  style={adminZavadyStyle.tlacitko}
                   onPress={() => editovatZavadu(item.id!, item.imageUrl!)}>
                   Zobraziť
                 </Button>
@@ -174,11 +171,11 @@ export const NahlaseneZavady = ({navigation, route}: any) => {
           </ScrollView>
         </SafeAreaView>
      
-        <View style={nahlaseneStyle.corner}>        
+        <View style={adminZavadyStyle.corner}>        
         <Button
                   icon="folder-check-outline"
                   mode="contained"
-                  style={nahlaseneStyle.filter}
+                  style={adminZavadyStyle.filter}
                   onPress={navNovaZavada}>
                   Vyriešeno
                 </Button>

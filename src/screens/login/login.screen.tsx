@@ -39,11 +39,18 @@ export const LoginScreen = ({navigation}) => {
       .signInWithEmailAndPassword(name, password)
       .then(() => {
         if (user.uid == 'trjjlGyxG0Pc62jxqPaNfcHAkJy1') {
+          navigation.navigate('Admin zavady', {
+            UserUID: user.uid,
+            UserEmail: user.email,
+          });
+        }
+        else if (user.uid == 'kOA2chKYOEab9P2lcbt1eRB7FUD3') { //Zamestnanec vladimir.andreansky@tuke.sk
           navigation.navigate('Nahlasene zavady', {
             UserUID: user.uid,
             UserEmail: user.email,
           });
-        } else
+        }
+        else
           navigation.navigate('Vsechny zavady', {
             UserUID: user.uid,
             UserEmail: user.email,
